@@ -35,8 +35,29 @@ router.post("/signup",async(req,res)=>{
 
 //logging in the user
 
-router.post("/login",(req,res)=>{
+router.post("/login",async(req,res)=>{
+    const {username,password}=req.body;
 
+    const user=await Admin.findOne({"username":username});
+    if(user!=undefined)
+    {
+        const valid=await bycrypt.compare(password,user.password);
+
+        if(valid)
+        {
+            const payload={
+                username,
+                password,
+                id:user._id
+            }
+            const new_token=jwt.sign(payload,process.env.ACCESS_TOKEN_SECRET,{expiresIn:"1h"});
+            res.status(200).json({msg:"logged in successfull",token:new_token});
+        }
+        else
+        res.status(401).send("password wrong!")
+    }
+    else
+    res.status(401).send("username not present");
 })
 
 
