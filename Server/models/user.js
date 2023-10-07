@@ -1,0 +1,11 @@
+import mongoose from "mongoose";
+
+const user=mongoose.Schema({
+    username:{type:String,required:true},
+    password:{type:String,required:true},
+    branch:{type:String},
+    batch:{type:Number}
+})
+
+const User=mongoose.model("User",user);
+export default User

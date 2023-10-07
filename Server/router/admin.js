@@ -1,11 +1,14 @@
-// import express from 'express';
-// import Admin from '../models/admin';
-
-const express=require("express");
-const Admin=require("../models/admin.js");
-const jwt=require("jsonwebtoken");
-const bycrypt=require("bcrypt")
-require("dotenv").config();
+import express from 'express';
+import Admin from '../models/admin.js';
+import jwt from 'jsonwebtoken';
+import bycrypt from 'bcrypt';
+import dotenv from 'dotenv'
+// const express=require("express");
+// const Admin=require("../models/admin.js");
+// const jwt=require("jsonwebtoken");
+// const bycrypt=require("bcrypt")
+// require("dotenv").config();
+dotenv.config()
 
 const router=express.Router();
 
@@ -59,5 +62,7 @@ router.post("/login",async(req,res)=>{
     else
     res.status(401).send("username not present");
 })
+
+export default router
 
 
