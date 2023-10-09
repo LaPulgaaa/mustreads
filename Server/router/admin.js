@@ -1,8 +1,11 @@
 import express from 'express';
 import Admin from '../models/admin.js';
+
+import Note from '../models/notes.js';
 import jwt from 'jsonwebtoken';
 import bycrypt from 'bcrypt';
 import dotenv from 'dotenv'
+import authenticate from '../middleware/authenticate.js';
 // const express=require("express");
 // const Admin=require("../models/admin.js");
 // const jwt=require("jsonwebtoken");
@@ -63,6 +66,23 @@ router.post("/login",async(req,res)=>{
     res.status(401).send("username not present");
 })
 
+
+//add notes
+router.post("/createNotes",authenticate,async(req,res)=>{
+
+    const {course,topic,content}=req.body;
+
+    const admin=await Admin.findOne({"username":req.user.username,"password":req.user.password});
+    const new_note=await Note.create({
+        course:course,
+        topic:topic,
+        content:content,
+        admin:admin._id
+    });
+    res.status(201).json({msg:"new notes added successfully",new_note});
+    
+
+})
 export default router
 
 
