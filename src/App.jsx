@@ -1,4 +1,4 @@
-import Landing from "./components/Admin/Landing"
+import Landing from "./components/Landing"
 import Navbar from "./components/Navbar"
 import { Route,Routes } from "react-router-dom"
 function App() {
