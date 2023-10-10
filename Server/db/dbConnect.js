@@ -6,7 +6,7 @@ import _ from '../env.js'
 console.log((process.env.MONGO_URI))
 async function connectDb(){
     try{
-        const conn=await mongoose.connect("mongodb+srv://lapulga:28012002@admin.lm9byck.mongodb.net/?retryWrites=true&w=majority&appName=AtlasApp",{
+        const conn=await mongoose.connect(process.env.MONGO_URI,{
             useUnifiedTopology: true,
             useNewUrlParser: true,
 
