@@ -22,12 +22,14 @@ router.get("/intro",(req,res)=>{
 //creating a admin ie.sign up
 
 router.post("/signup",async(req,res)=>{
-    const {username,password}=req.body;
+    const {username,password,batch,branch}=req.body;
 
     const hashedPassword=await bycrypt.hash(password,10);
     const admin=await Admin.create({
         username:username,
-        password:hashedPassword
+        password:hashedPassword,
+        batch:batch,
+        branch:branch
     })
     const payload={
         username,
