@@ -34,7 +34,7 @@ router.post("/signup",async(req,res)=>{
     const payload={
         username,
         password,
-        id:admin
+        id:admin._id
     }
     const accessToken=jwt.sign(payload,process.env.ACCESS_TOKEN_SECRET,{expiresIn:"1h"})
 

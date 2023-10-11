@@ -23,7 +23,7 @@ function Login() {
           <Button fullWidth={true}  variant='contained' onClick={()=>navigate('/')}>LOG IN</Button>
           <hr/>
           <Typography variant='caption'  >DO NOT HAVE AN ACCOUNT
-          <Link to="/signup" style={{padding:2}}>SIGN UP</Link>
+          <Link to="/admin/signup" style={{padding:2}}>SIGN UP</Link>
           </Typography>
       
         </Card>

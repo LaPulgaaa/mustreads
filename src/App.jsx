@@ -10,7 +10,7 @@ function App() {
       <Navbar/>
       <Routes>
         <Route path={"/"} element={<Landing/>}/>
-        <Route path={"/signup"} element={<SignAdmin/>}/>
+        <Route path={"/admin/signup"} element={<SignAdmin/>}/>
       </Routes>
     </div>
   )
