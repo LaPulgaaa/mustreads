@@ -13,9 +13,15 @@ function Navbar() {
        
         <div style={{paddingRight:12}}>
             <Button style={{marginRight:12}} variant='text'>Read</Button>
-            <Button style={{marginRight:12}} variant='text'>About us</Button>
+            
             <Button style={{marginRight:12}} variant='text'>Student</Button>
             <Button style={{marginRight:12}} variant='text'>Admin</Button>
+            <Button style={{marginRight:12}} variant='text'
+            onClick={()=>{
+              localStorage.removeItem("token")
+              window.location="/"
+            }}
+            >LOG OUT</Button>
         </div>
     </div>
   )

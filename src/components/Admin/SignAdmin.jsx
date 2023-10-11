@@ -9,7 +9,8 @@ function SignAdmin() {
     const [password,setPassword]=useState('');
     const [branch,setBranch]=useState('');
     const [batch,setBatch]=useState('');
-    const [confirm,setConfirm]=useState('')
+    const [confirm,setConfirm]=useState('');
+    
   return (
     <div style={{marginTop:48}}>
         <Grid container>
@@ -61,13 +62,13 @@ function SignAdmin() {
                                 username:username,
                                 password:password,
                                 batch:batch,
-                                branch:batch
+                                branch:branch
                             }
                             const resp=await api.post('/admin/signup',body);
                             const {token}=resp.data;
                             localStorage.setItem("token",token);
-                            console.log(resp.data);
-                            navigate('/');
+                            
+                            navigate('/admin/notes');
 
                             
 

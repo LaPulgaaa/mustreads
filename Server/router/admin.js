@@ -83,6 +83,10 @@ router.post("/createNotes",authenticate,async(req,res)=>{
 
 })
 
+//get the added notes
+
+
+
 export default router
 
 
