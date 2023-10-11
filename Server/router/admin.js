@@ -6,11 +6,7 @@ import jwt from 'jsonwebtoken';
 import bycrypt from 'bcrypt';
 import dotenv from 'dotenv'
 import authenticate from '../middleware/authenticate.js';
-// const express=require("express");
-// const Admin=require("../models/admin.js");
-// const jwt=require("jsonwebtoken");
-// const bycrypt=require("bcrypt")
-// require("dotenv").config();
+
 dotenv.config()
 
 const router=express.Router();
@@ -22,6 +18,7 @@ router.get("/intro",(req,res)=>{
 //creating a admin ie.sign up
 
 router.post("/signup",async(req,res)=>{
+    console.log(req.body)
     const {username,password,batch,branch}=req.body;
 
     const hashedPassword=await bycrypt.hash(password,10);

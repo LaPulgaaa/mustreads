@@ -20,10 +20,11 @@ const corsOptions={
 }
 const app=express();
 app.use(cors(corsOptions));
-app.use(adminRoute);
+
 app.use(express.json());
 
 
+app.use("/admin",adminRoute);
 app.get("/",(req,res)=>{
     res.status(200).send("welcome to the website")
 })
