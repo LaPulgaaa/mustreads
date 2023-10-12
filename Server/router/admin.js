@@ -69,13 +69,15 @@ router.post("/login",async(req,res)=>{
 //add notes
 router.post("/createNotes",authenticate,async(req,res)=>{
 
-    const {course,topic,content}=req.body;
-
-    const admin=await Admin.findOne({"username":req.user.username,"password":req.user.password});
+    const {course,topic,content,category}=req.body;
+    console.log(req.user)
+    const admin=await Admin.findOne({"username":req.user.username});
+    console.log(admin)
     const new_note=await Note.create({
         course:course,
         topic:topic,
         content:content,
+        category:category,
         admin:admin._id
     });
     res.status(201).json({msg:"new notes added successfully",new_note});

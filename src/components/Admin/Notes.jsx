@@ -44,8 +44,8 @@ function Notes() {
                     <Card variant='outlined'>
                        <CardHeader
                        avatar={
-                        <Avatar sx={{bgcolor:blue[200]}}>
-                            {note.title.charAt(0)}
+                        <Avatar >
+                            {note.topic.charAt(0)}
                         </Avatar>
 
                        }

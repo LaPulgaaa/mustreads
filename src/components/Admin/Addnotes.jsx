@@ -1,19 +1,28 @@
-import { Button, Card,TextField } from '@mui/material'
+import { Box, Button, Card,TextField } from '@mui/material'
 import Select from '@mui/material/Select'
  import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import React,{useState} from 'react'
-
+import api from '../../api/api';
+import { useRecoilState } from 'recoil';
+import adminnoteState from '../../store/atom/adminNote';
+import { useNavigate } from 'react-router-dom';
 function Addnotes() {
-
+    const navigate=useNavigate()
+    const [notes,setNotes]=useRecoilState(adminnoteState);
+    const [code,setCode]=useState('');
+    const [topic,setTopic]=useState('');
+    const [content,setContent]=useState('');
     const [category,setCategory]=useState('');
   return (
     <div style={{display:"flex",justifyContent:"center"}}>
         <Card variant='outlined' style={{width:800,margin:48,padding:24}}>
-            <FormControl>
+            <Box style={{padding:6,margin:6,width:320}} sx={{minWidth:120}}>
+            <FormControl fullWidth>
             <InputLabel id="type-content" >Category</InputLabel>
             <Select labelId="type-content"
+            onChange={(e)=>setCategory(e.target.value)}
             label="Category"
             value={category}
             >
@@ -22,13 +31,44 @@ function Addnotes() {
             </Select>
             
             </FormControl>
+            </Box>
+           
             
             
-            <TextField style={{padding:6,margin:6}} variant="outlined" type='text' fullWidth={true} label="Course-code" />
-            <TextField style={{padding:6,margin:6}} variant="outlined" type='text' fullWidth={true} label="Topic" />
-            <TextField style={{padding:6,margin:6}} multiline  maxRows={8} variant="outlined" type='text' fullWidth={true} label="Add Content" />
+            <TextField value={topic} onChange={(e)=>{
+                setTopic(e.target.value)
+            }} style={{padding:6,margin:6}} variant="outlined" type='text' fullWidth={true} label="Topic" />
+            <TextField value={code} 
+            onChange={(e)=>{
+                setCode(e.target.value)
+            }} style={{padding:6,margin:6}} variant="outlined" type='text' fullWidth={true} label="Course-code" />
+            <TextField value={content} onChange={(e)=>{
+                
+                setContent(e.target.value)
+            }} style={{padding:6,margin:6}} multiline  maxRows={8} variant="outlined" type='text' fullWidth={true} label="Add Content" />
 
-            <Button style={{marginTop:12}} variant="contained" fullWidth={true}>Add Notes</Button>
+            <Button style={{marginTop:12}} variant="contained"
+             fullWidth={true}
+             onClick={async()=>{
+                const note={
+                    course:code,
+                    topic:topic,
+                    content:content,
+                    category:category
+                }
+                const new_notes=[...notes,note];
+                setNotes(new_notes);
+                const resp=await api.post("/admin/createNotes",note,{
+                    headers:{
+                        Authorization:"Bearer "+localStorage.getItem("token")
+                    }
+                });
+                console.log(resp.data)
+                if(resp.status=201)
+                navigate('/admin/notes')
+
+             }} 
+             >Add Notes</Button>
 
             
 

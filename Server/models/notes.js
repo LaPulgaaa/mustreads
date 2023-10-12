@@ -6,6 +6,7 @@ const notes=mongoose.Schema({
     topic:{type:String,required:true},
     content:{type:String},
     published:{type:Boolean,default:false},
+    category:{type:String,default:"Notes"},
     admin:{type:SchemaTypes.ObjectId,ref:"Admin"}
 })
 
