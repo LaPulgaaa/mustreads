@@ -20,6 +20,7 @@ function Notes() {
                     {
                         setNotes([...resp.data]);
                     }
+                    console.log(resp.data)
 
             }catch(error)
             {

@@ -56,7 +56,7 @@ router.post("/login",async(req,res)=>{
                 id:user._id
             }
             const new_token=jwt.sign(payload,process.env.ACCESS_TOKEN_SECRET,{expiresIn:"1h"});
-            res.status(200).json({msg:"logged in successfull",token:new_token});
+            res.status(200).json({msg:`logged in user with user id-${user._id}`,token:new_token});
         }
         else
         res.status(401).send("password wrong!")
@@ -85,7 +85,16 @@ router.post("/createNotes",authenticate,async(req,res)=>{
 
 //get the added notes
 
+router.get("/notes",authenticate,async(req,res)=>{
 
+    const notes=await Note.find({"admin":req.user._id});
+    if(notes!=undefined)
+    {
+        res.status(200).json(notes)
+    }
+    else
+    res.status(404).send("notes not found!!");
+})
 
 export default router
 

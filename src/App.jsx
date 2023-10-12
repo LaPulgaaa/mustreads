@@ -1,3 +1,4 @@
+import { RecoilRoot } from "recoil"
 import Notes from "./components/Admin/Notes"
 import SignAdmin from "./components/Admin/SignAdmin"
 import Landing from "./components/Landing"
@@ -7,7 +8,8 @@ function App() {
   
 
   return (
-    <div>
+    <RecoilRoot>
+      <div>
       <Navbar/>
       <Routes>
         <Route path={"/"} element={<Landing/>}/>
@@ -15,6 +17,8 @@ function App() {
         <Route path={"/admin/notes"} element={<Notes/>} />
       </Routes>
     </div>
+    </RecoilRoot>
+    
   )
 }
 

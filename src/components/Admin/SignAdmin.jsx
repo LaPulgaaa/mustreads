@@ -66,6 +66,7 @@ function SignAdmin() {
                             }
                             const resp=await api.post('/admin/signup',body);
                             const {token}=resp.data;
+                            console.log(token)
                             localStorage.setItem("token",token);
                             
                             navigate('/admin/notes');
