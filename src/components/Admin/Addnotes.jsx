@@ -58,6 +58,7 @@ function Addnotes() {
                 }
                 const new_notes=[...notes,note];
                 setNotes(new_notes);
+                console.log(new_notes)
                 const resp=await api.post("/admin/createNotes",note,{
                     headers:{
                         Authorization:"Bearer "+localStorage.getItem("token")

@@ -88,8 +88,9 @@ router.post("/createNotes",authenticate,async(req,res)=>{
 //get the added notes
 
 router.get("/notes",authenticate,async(req,res)=>{
-
-    const notes=await Note.find({"admin":req.user._id});
+    console.log(req.user.id)
+    const notes=await Note.find({"admin":req.user.id});
+    // console.log(notes)
     if(notes!=undefined)
     {
         res.status(200).json(notes)

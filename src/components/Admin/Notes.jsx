@@ -13,6 +13,7 @@ function Notes() {
     const navigate=useNavigate()
 
     const notes=useRecoilValue(adminnoteState);
+    console.log(notes)
     const setNotes=useSetRecoilState(adminnoteState);
     useEffect(()=>{
         async function getNotes(){
