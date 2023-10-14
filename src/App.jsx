@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar"
 import { Route,Routes } from "react-router-dom"
 import Addnotes from "./components/Admin/Addnotes"
 import Editnotes from "./components/Admin/Editnotes"
+import AdminPanel from "./components/Admin/AdminPanel"
 function App() {
   
 
@@ -19,6 +20,7 @@ function App() {
         <Route path={"/admin/notes"} element={<Notes/>} />
         <Route path={"/admin/createNotes"} element={<Addnotes/>}/>
         <Route path={"/admin/editNotes/:noteId"} element={<Editnotes/>} />
+        <Route path={"/admin/dashboard"} element={<AdminPanel/>} />
       </Routes>
     </div>
     </RecoilRoot>

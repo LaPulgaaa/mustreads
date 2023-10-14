@@ -1,12 +1,13 @@
 import { Box, Button, Card, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useRecoilValue } from 'recoil';
 import adminnoteState from '../../store/atom/adminNote';
 import api from '../../api/api';
 function Editnotes() {
     const {noteId}=useParams();
     const notes=useRecoilValue(adminnoteState);
+    const navigate=useNavigate();
     
     const editNote=notes.find((note)=>{
        
@@ -34,10 +35,16 @@ function Editnotes() {
             onClick={async()=>{
                try{
                     const resp= await api.put(`admin/editNote/${noteId}`,{
-                    title:edit_title,
+                    topic:edit_title,
                     content:edit_content,
                     course:edit_course
+                },{
+                    headers:{
+                        "Authorization":"Bearer "+localStorage.getItem("token")
+                    }
                 })
+                if(resp.status==200)
+                navigate('/admin/notes');
                 console.log(resp.data.note_edit);
                }catch(err)
                {

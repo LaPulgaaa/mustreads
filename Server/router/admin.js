@@ -124,10 +124,10 @@ router.put("/editNote/:noteId",authenticate,async(req,res)=>{
     await note_edit.save();
 
     if(note_edit){
-        res.status(400).json({msg:"updated succesfully"});
+        res.status(200).json({msg:"updated succesfully",note_edit});
     }
     else
-    res.status(400).send("could not save the note succesfully !!.please try again",note_edit);
+    res.status(400).send("could not save the note succesfully !!.please try again");
 
 })
 

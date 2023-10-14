@@ -102,7 +102,7 @@ function Notes() {
   return (
     <div style={{padding:12,margin:6}}>
         <div style={{display:"flex", justifyContent:"end",marginRight:12}}>
-            <IconButton>
+            <IconButton onClick={()=>{navigate('/admin/dashboard')}}>
                 <AccountCircle style={{margin:12,padding:12}} />
                 
             </IconButton>
