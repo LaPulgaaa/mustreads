@@ -56,14 +56,16 @@ function Addnotes() {
                     content:content,
                     category:category
                 }
-                const new_notes=[...notes,note];
-                setNotes(new_notes);
-                console.log(new_notes)
+                
+                
                 const resp=await api.post("/admin/createNotes",note,{
                     headers:{
                         Authorization:"Bearer "+localStorage.getItem("token")
                     }
                 });
+                const new_note=resp.data.new_note;
+                const new_notes=[...notes,new_note];
+                setNotes(new_notes);
                 console.log(resp.data)
                 if(resp.status=201)
                 navigate('/admin/notes')

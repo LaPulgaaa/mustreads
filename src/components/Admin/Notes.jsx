@@ -41,7 +41,7 @@ function Notes() {
 
     const data=notes.map((note)=>{
             return(
-                <Grid item md={4} sm={1}  key={note._id} >
+                <Grid item xl={3}  md={4} sm={6} key={note._id} >
                     <Card variant='outlined'>
                        <CardHeader
                        avatar={
@@ -53,10 +53,38 @@ function Notes() {
                        title={note.topic}
                        subheader={note.course}
                        action={
-                        <IconButton aria-label='delete note'>
+                        <div>
+                        <IconButton onClick={async()=>{
+                            try{
+                                const resp=await api.delete(`/admin/deleteNote/${note._id}`,{
+                                    headers:{
+                                        "Authorization":"Bearer "+localStorage.getItem("token")
+                                    }
+                                })
+                                if(resp.status==200)
+                                {
+                                    const new_notes=notes.filter((left)=>{
+                                        if(left._id!==note._id)
+                                        return note;
+                                    });
+                                    setNotes([...new_notes]);
+                                }
+                                console.log(resp.data)
+                            }catch(err)
+                            {
+                                console.log("Could not delete the task:",err);
+                            }
+                        }}>
                             <DeleteForever/>
+                        </IconButton>
+                        <IconButton onClick={()=>{
+                            navigate(`/admin/editnotes/${note._id}`)
+                        }} aria-label='edit-note'>
+                            
                             <EditNote/>
                         </IconButton>
+                        </div>
+                        
                        }
                        />
                        <CardContent>

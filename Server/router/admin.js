@@ -88,7 +88,7 @@ router.post("/createNotes",authenticate,async(req,res)=>{
 //get the added notes
 
 router.get("/notes",authenticate,async(req,res)=>{
-    console.log(req.user.id)
+    // console.log(req.user.id)
     const notes=await Note.find({"admin":req.user.id});
     // console.log(notes)
     if(notes!=undefined)
@@ -98,6 +98,39 @@ router.get("/notes",authenticate,async(req,res)=>{
     else
     res.status(404).send("notes not found!!");
 })
+
+//delete a note
+
+router.delete("/deleteNote/:noteId",authenticate,async(req,res)=>{
+        const noteId=req.params.noteId;
+        const del_note=await Note.findByIdAndDelete(noteId);
+        if(del_note){
+            res.status(200).json({msg:"task deleted successfully",del_note});
+        }
+        else
+        res.status(403).send("could not process the request!");
+
+})
+
+//edit a note
+router.put("/editNote/:noteId",authenticate,async(req,res)=>{
+    const noteId=req.params.noteId;
+    console.log(noteId)
+    const {course,topic,content}=req.body;
+    const note_edit=await Note.findById(noteId);
+    note_edit.course=course;
+    note_edit.topic=topic;
+    note_edit.content=content;
+    await note_edit.save();
+
+    if(note_edit){
+        res.status(400).json({msg:"updated succesfully"});
+    }
+    else
+    res.status(400).send("could not save the note succesfully !!.please try again",note_edit);
+
+})
+
 
 export default router
 

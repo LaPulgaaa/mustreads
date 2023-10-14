@@ -17,7 +17,7 @@ function Login() {
       <Box style={{display:'flex',justifyContent:'center'}}>
       <Grid2 container spacing={16}>
         <Grid2 item md={12} lg={6} >
-        <Card style={{width:400,padding:24,backgroundColor:'#aec993'}} sx={{maxWidth:400}} variant='outlined'>
+        <Card style={{width:400,padding:24,backgroundColor:'#e9a451'}} sx={{maxWidth:400}} variant='outlined'>
 
             <AdminPanelSettings style={{}} fontSize='large'/>
             <Typography style={{display:'flex',justifyContent:'center'}} variant='h6'>Admin</Typography>
