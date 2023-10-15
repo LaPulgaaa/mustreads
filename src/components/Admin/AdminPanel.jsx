@@ -4,7 +4,7 @@ import React from 'react'
 import {Button} from '@mui/material'
 import img from './images/admin.jpg'
 import Grid from '@mui/material/Unstable_Grid2/Grid2'
-import { Edit, ManageAccounts, MenuBook, Place, School } from '@mui/icons-material'
+import { Edit, ManageAccounts, MenuBook, NavigateBefore, Place, School } from '@mui/icons-material'
 import { Mail } from '@mui/icons-material'
 import { useRecoilValue } from 'recoil'
 
@@ -18,9 +18,21 @@ function AdminPanel() {
   return (
     <div style={{display:"flex",marginLeft:256,marginTop:32,padding:24}}>
         <Box >
-            <Typography variant="h4">Welcome, {profile.username}</Typography>
-            <Typography variant="body2">Admin:Dashboard</Typography>
-            <Card style={{width:"100%",backgroundColor:"#8caba8",marginRight:124,paddingRight:128}}>
+        <Button style={{margin:6,padding:6,backgroundColor:"black"}} sx={{borderRadius:2}} variant='contained' startIcon={<NavigateBefore/>}>Back</Button>
+          <div style={{display:"flex",justifyContent:"space-between"}}>
+          <div>
+              <Typography variant="h4">Welcome, {profile.username}</Typography>
+              <Typography variant="body2">Admin:Dashboard</Typography>
+            </div>
+            
+            <div >
+             <Button style={{margin:6,padding:6,backgroundColor:"black"}} sx={{borderRadius:2}} variant='contained' startIcon={<ManageAccounts/>}>Edit </Button>
+             
+            </div>
+
+          </div>
+            
+            <Card style={{width:"90%",backgroundColor:"#8caba8",marginRight:124,paddingRight:128}}>
                 <CardHeader
                 style={{paddingTop:128,paddingLeft:24,paddingBottom:12,fontWeight:"bold"}}
                 avatar={
@@ -78,21 +90,8 @@ function AdminPanel() {
                   </Grid>
                   <Grid item md={12}>
                     <Card variant="elevation" style={{display:"flex",margin:24,padding:12,justifyContent:"space-evenly",alignContent:"center"}}>
-                      <Card style={{padding:12,margin:6,backgroundColor:"#8caba8"}} variant="elevation">
-                      <IconButton  size="large">
-                          
-                          <ManageAccounts fontSize='large'/>
-                        </IconButton>
-                        <Typography variant='subtitle2'>Manage Account</Typography>
-
-                      </Card>
-                        
-                        <Card style={{padding:12,margin:6,backgroundColor:"#8caba8"}} variant="elevation">
-                        <IconButton size="large">
-                                <Edit fontSize='large'/>
-                        </IconButton>
-                        <Typography variant="subtitle2">Add Notes</Typography>
-                        </Card>
+                      
+                       
                         
                     </Card>
                   </Grid>
