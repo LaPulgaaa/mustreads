@@ -38,9 +38,15 @@ function Login() {
               password:admin_password
             });
             const {token,user}=resp.data;
-            console.log(user);
+            // console.log(user);
+            const entry={
+              username:user.username,
+              branch:user.branch,
+              batch:user.batch,
+              thoughts:""
+            }
 
-            setProfile(user);
+            setProfile(entry);
             
             localStorage.setItem("token",token);
             navigate('/admin/notes')
