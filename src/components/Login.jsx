@@ -43,7 +43,8 @@ function Login() {
               username:user.username,
               branch:user.branch,
               batch:user.batch,
-              thoughts:""
+              thoughts:"",
+              tag:""
             }
 
             setProfile(entry);

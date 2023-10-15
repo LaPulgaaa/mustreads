@@ -65,6 +65,24 @@ router.post("/login",async(req,res)=>{
     res.status(401).send("username not present");
 })
 
+//edit admin details
+router.put("/editDetails",authenticate,async(req,res)=>{
+    const {username,password,batch,branch}=req.body;
+
+    const admin=await Admin.findOne({"username":req.user.username});
+    if(admin)
+    {
+        admin.username=username;
+        admin.password=password;
+        admin.batch=batch;
+        admin.branch=branch;
+        await admin.save();
+
+        res.status(200).json({msg:"details updated succesfully",admin});
+    }
+    else
+    res.status(404).send("Admin details not found !!please try again")
+})
 
 //add notes
 router.post("/createNotes",authenticate,async(req,res)=>{

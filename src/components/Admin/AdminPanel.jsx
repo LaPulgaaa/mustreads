@@ -10,15 +10,21 @@ import { useRecoilValue } from 'recoil'
 
 import admin from '../../store/atom/adminProfile'
 import adminnoteState from '../../store/atom/adminNote'
+import { useNavigate } from 'react-router-dom'
 //List-it/src/assets/avatar_25.jpg
 function AdminPanel() {
   const profile=useRecoilValue(admin);
-  const note=useRecoilValue(adminnoteState)
+  const note=useRecoilValue(adminnoteState);
+  const navigate=useNavigate();
   // console.log(profile)
   return (
     <div style={{display:"flex",marginLeft:256,marginTop:32,padding:24}}>
         <Box >
-        <Button style={{margin:6,padding:6,backgroundColor:"black"}} sx={{borderRadius:2}} variant='contained' startIcon={<NavigateBefore/>}>Back</Button>
+        <Button 
+        onClick={()=>{
+            navigate('/admin/notes');
+        }}
+        style={{margin:6,padding:6,backgroundColor:"black"}} sx={{borderRadius:2}} variant='contained' startIcon={<NavigateBefore/>}>Back</Button>
           <div style={{display:"flex",justifyContent:"space-between"}}>
           <div>
               <Typography variant="h4">Welcome, {profile.username}</Typography>
@@ -26,7 +32,9 @@ function AdminPanel() {
             </div>
             
             <div >
-             <Button style={{margin:6,padding:6,backgroundColor:"black"}} sx={{borderRadius:2}} variant='contained' startIcon={<ManageAccounts/>}>Edit </Button>
+             <Button 
+             onClick={()=>navigate('/admin/editDetails')}
+             style={{margin:6,padding:6,backgroundColor:"black"}} sx={{borderRadius:2}} variant='contained' startIcon={<ManageAccounts/>}>Edit </Button>
              
             </div>
 
