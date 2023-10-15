@@ -5,13 +5,16 @@ import { AccountCircle,AdminPanelSettings } from '@mui/icons-material'
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
+import { useRecoilState } from 'recoil'
+import admin from '../store/atom/adminProfile.jsx'
 function Login() {
   const navigate=useNavigate();
   const [username,setUsername]=useState('');
   const [user_password,setUserPassword]=useState('');
   const [adminname,setAdminname]=useState('');
   const [admin_password,setAdminPassword]=useState('');
-
+  const [profile,setProfile]=useRecoilState(admin);
+  // console.log(profile)
   return (
     <div>
       <Box style={{display:'flex',justifyContent:'center'}}>
@@ -34,8 +37,11 @@ function Login() {
               username:adminname,
               password:admin_password
             });
-            const {token}=resp.data;
-            console.log(resp.data.msg)
+            const {token,user}=resp.data;
+            console.log(user);
+
+            setProfile(user);
+            
             localStorage.setItem("token",token);
             navigate('/admin/notes')
 

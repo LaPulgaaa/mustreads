@@ -56,7 +56,7 @@ router.post("/login",async(req,res)=>{
                 id:user._id
             }
             const new_token=jwt.sign(payload,process.env.ACCESS_TOKEN_SECRET,{expiresIn:"1h"});
-            res.status(200).json({msg:`logged in user with user id-${user._id}`,token:new_token});
+            res.status(200).json({msg:`logged in user with user id-${user._id}`,token:new_token,user});
         }
         else
         res.status(401).send("password wrong!")
