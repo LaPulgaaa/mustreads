@@ -4,7 +4,7 @@ const user=mongoose.Schema({
     username:{type:String,required:true},
     password:{type:String,required:true},
     branch:{type:String},
-    batch:{type:Number}
+    batch:{type:Number,default:"hello everyone .I like to study and get good marks "}
 })
 
 const User=mongoose.model("User",user);

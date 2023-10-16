@@ -13,7 +13,7 @@ function App() {
 
   return (
     <RecoilRoot>
-      <div>
+      <div style={{}}>
       <Navbar/>
       <Routes>
         <Route path={"/"} element={<Landing/>}/>

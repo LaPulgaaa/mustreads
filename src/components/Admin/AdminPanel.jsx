@@ -16,7 +16,7 @@ function AdminPanel() {
   const profile=useRecoilValue(admin);
   const note=useRecoilValue(adminnoteState);
   const navigate=useNavigate();
-  // console.log(profile)
+  console.log(profile)
   return (
     <div style={{display:"flex",marginLeft:256,marginTop:32,padding:24}}>
         <Box >
@@ -67,7 +67,7 @@ function AdminPanel() {
                     <Grid item md={12}>
                         <Card variant="elevation" style={{margin:24,padding:12}}>
                         <Typography variant="h6">About</Typography>
-                        <Typography style={{margin:4,textAlign:"left"}} variant="body1">Tart I love sugar plum I love oat cake. Sweet roll caramels I love jujubes. Topping cake wafer</Typography>
+                        <Typography style={{margin:4,textAlign:"left"}} variant="body1">{profile.about}</Typography>
                         <List>
                           <ListItem disablePadding>
                             <ListItemIcon>
@@ -91,7 +91,7 @@ function AdminPanel() {
                 <Grid container md={8}>
                   <Grid item md={12}>
                     <Card variant="elevation" style={{margin:24,padding:12}}>
-                      <TextField type='text' variant='outlined' multiline  minRows={4} fullWidth={true} label="Share your thoughts...." />
+                      <TextField  type='text' variant='outlined' multiline  minRows={4} fullWidth={true} label="Share your thoughts...." />
                         <Button  variant='contained' style={{backgroundColor:"black",padding:4,margin:8,display:"flex"}}>Post</Button>
                     </Card>
 

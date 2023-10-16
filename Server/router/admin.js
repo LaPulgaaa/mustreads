@@ -19,14 +19,16 @@ router.get("/intro",(req,res)=>{
 
 router.post("/signup",async(req,res)=>{
     console.log(req.body)
-    const {username,password,batch,branch}=req.body;
+    const {username,password,batch,branch,about,email}=req.body;
 
     const hashedPassword=await bycrypt.hash(password,10);
     const admin=await Admin.create({
         username:username,
         password:hashedPassword,
         batch:batch,
-        branch:branch
+        branch:branch,
+        about:about,
+        email:email
     })
     const payload={
         username,
@@ -67,15 +69,15 @@ router.post("/login",async(req,res)=>{
 
 //edit admin details
 router.put("/editDetails",authenticate,async(req,res)=>{
-    const {username,password,batch,branch}=req.body;
+    const {batch,branch,about,email}=req.body;
 
     const admin=await Admin.findOne({"username":req.user.username});
     if(admin)
     {
-        admin.username=username;
-        admin.password=password;
         admin.batch=batch;
+        admin.about=about;
         admin.branch=branch;
+        admin.email=email;
         await admin.save();
 
         res.status(200).json({msg:"details updated succesfully",admin});

@@ -43,8 +43,9 @@ function Login() {
               username:user.username,
               branch:user.branch,
               batch:user.batch,
-              thoughts:"",
-              tag:""
+              about:user.about,
+              email:user.email
+              
             }
 
             setProfile(entry);

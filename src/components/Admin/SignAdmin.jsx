@@ -9,12 +9,14 @@ function SignAdmin() {
     const [password,setPassword]=useState('');
     const [branch,setBranch]=useState('');
     const [batch,setBatch]=useState('');
+    const [about,setAbout]=useState('');
+    const [email,setEmail]=useState('');
     const [confirm,setConfirm]=useState('');
     
   return (
     <div style={{marginTop:48}}>
         <Grid container>
-            <Grid item style={{textAlign:"left",padding:48}} md={6}>
+            <Grid item style={{textAlign:"left",padding:48,backgroundColor:"#f6cd61"}} md={6}>
                 <Typography variant='h1'>HELP </Typography>
                 <Typography variant='h1'>YOUR </Typography>
                 <Typography variant='h1'>FRIENDS</Typography>
@@ -30,7 +32,7 @@ function SignAdmin() {
 
                     <TextField style={{padding:4,margin:4}} value={username} type='text' variant='outlined' label="username" 
                     fullWidth={true} onChange={(e)=>setUsername(e.target.value)} />
-                    <TextField style={{padding:4,margin:4}} value={password} type='password' variant='outlined' label="password"
+                    <TextField style={{padding:4,margin:4}} helperText="*atleast 6 digits" value={password} type='password' variant='outlined' label="password"
                     onChange={(e)=>setPassword(e.target.value)}
                      fullWidth={true}/>
 
@@ -48,6 +50,21 @@ function SignAdmin() {
                     helperText="please enter your batch"
                      label="20**" fullWidth={true} />
 
+
+                    <TextField style={{padding:4,margin:4}}  value={email}
+                    onChange={(e)=>setEmail(e.target.value)}
+                    type='text' variant='outlined'
+                    
+                    label="admin@gmail.com" fullWidth={true} />
+
+
+                    <TextField style={{padding:4,margin:4}} multiline minRows={4} value={about}
+                    onChange={(e)=>setAbout(e.target.value)}
+                    type='text' variant='outlined'
+                    
+                     label="write something to share with the world..." fullWidth={true} />
+
+                   
                     <Button
                      fullWidth={true}  variant='contained' onClick={async()=>{
                         if(confirm!=password)
@@ -62,7 +79,8 @@ function SignAdmin() {
                                 username:username,
                                 password:password,
                                 batch:batch,
-                                branch:branch
+                                branch:branch,
+                                about:about
                             }
                             const resp=await api.post('/admin/signup',body);
                             const {token}=resp.data;
