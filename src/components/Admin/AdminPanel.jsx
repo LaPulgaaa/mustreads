@@ -2,9 +2,10 @@ import {  Box, Card, CardHeader, Typography,Avatar, CardContent, Icon, List, Lis
 // import Avatar from '@mui/material'
 import React from 'react'
 import {Button} from '@mui/material'
+
 import img from './images/admin.jpg'
 import Grid from '@mui/material/Unstable_Grid2/Grid2'
-import { Edit, ManageAccounts, MenuBook, NavigateBefore, Place, School } from '@mui/icons-material'
+import { ArrowBack, Edit, Email, ManageAccounts, MenuBook, NavigateBefore, Place, School } from '@mui/icons-material'
 import { Mail } from '@mui/icons-material'
 import { useRecoilValue } from 'recoil'
 
@@ -20,11 +21,12 @@ function AdminPanel() {
   return (
     <div style={{display:"flex",marginLeft:256,marginTop:32,padding:24}}>
         <Box >
-        <Button 
+        <IconButton
+        size="large"
+        
         onClick={()=>{
             navigate('/admin/notes');
-        }}
-        style={{margin:6,padding:6,backgroundColor:"black"}} sx={{borderRadius:2}} variant='contained' startIcon={<NavigateBefore/>}>Back</Button>
+        }}><ArrowBack/></IconButton>
           <div style={{display:"flex",justifyContent:"space-between"}}>
           <div>
               <Typography variant="h4">Welcome, {profile.username}</Typography>
@@ -32,9 +34,9 @@ function AdminPanel() {
             </div>
             
             <div >
-             <Button 
+             <IconButton 
              onClick={()=>navigate('/admin/editDetails')}
-             style={{margin:6,padding:6,backgroundColor:"black"}} sx={{borderRadius:2}} variant='contained' startIcon={<ManageAccounts/>}>Edit </Button>
+             size='large'><ManageAccounts/> </IconButton>
              
             </div>
 
@@ -56,7 +58,7 @@ function AdminPanel() {
                  </CardContent>
             </Card>
             <Grid container rowSpacing={2} columnSpacing={2}>
-                <Grid container md={4}>
+                <Grid container md={5}>
                     <Grid item md={12}>
                       <Card variant="elevation" style={{margin:24,padding:12,textAlign:"center"}} >
                       <Typography variant='h5'>{note.length}</Typography>
@@ -83,12 +85,18 @@ function AdminPanel() {
                             </ListItemIcon>
                             <ListItemText>Batch of '{profile.batch}</ListItemText>
                           </ListItem>
+                          <ListItem disablePadding>
+                            <ListItemIcon>
+                              <Email/>
+                            </ListItemIcon>
+                            <ListItemText>{profile.email}</ListItemText>
+                          </ListItem>
                         </List>
                         </Card>
                     </Grid>
                     
                 </Grid>
-                <Grid container md={8}>
+                <Grid container md={7}>
                   <Grid item md={12}>
                     <Card variant="elevation" style={{margin:24,padding:12}}>
                       <TextField  type='text' variant='outlined' multiline  minRows={4} fullWidth={true} label="Share your thoughts...." />
