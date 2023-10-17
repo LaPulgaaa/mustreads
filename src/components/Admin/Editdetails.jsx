@@ -1,5 +1,5 @@
 
-import { Avatar,Card, TextField, Typography,Button, IconButton } from '@mui/material';
+import { Avatar,Card, TextField, Typography,Button, IconButton, BottomNavigation, BottomNavigationAction } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2/Grid2';
 import React,{useState} from 'react'
 import avatar from './images/admin.jpg'
@@ -7,17 +7,19 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import admin from '../../store/atom/adminProfile.jsx';
 import api from '../../api/api.js';
 import { useNavigate } from 'react-router-dom';
-import { ArrowBack } from '@mui/icons-material';
+import { ArrowBack, Badge, Key } from '@mui/icons-material';
 function Editdetails() {
   const navigate=useNavigate();
   const [adminData,setAdmindata]=useRecoilState(admin);
-  const [toggle,setToggle]=useState(true);
+  const [toggle,setToggle]=useState(0);
   const [batch,setBatch]=useState(adminData.batch);
   const [branch,setBranch]=useState(adminData.branch);
   const [share,setShare]=useState(adminData.about);
   const [email,setEmail]=useState(adminData.email);
+  const [password,setPassword]=useState('');
+  const [new_password,setNewPassword]=useState('');
+  const [confirm,setConfirm]=useState('');
   
-  console.log(adminData)
   const about=<div>
                 <Grid container spacing={2}>
                   <Grid item md={4}>
@@ -77,6 +79,62 @@ function Editdetails() {
 
                 </Grid>
               </div>
+
+  const security= <div style={{display:"flex",flexDirection:"column",width:"80%",justifyContent:"center",alignItems:"center",marginTop:24,marginLeft:48}}>
+                  <Card style={{padding:24,marginTop:24}} variant="outlined">
+                  <TextField style={{padding:2,margin:2,marginTop:6,paddingLeft:2}} type='password' variant="outlined"
+                    onChange={(e)=>setPassword(e.target.value)}
+                     fullWidth={true} value={password} label="Old Password" />
+                    <TextField style={{padding:2,margin:2,marginTop:6,paddingLeft:2}} helperText="Password must be minimum 6+" type='password' variant="outlined" 
+                    onChange={(e)=>setNewPassword(e.target.value)}
+                    fullWidth={true} value={new_password} label="New Password" />
+                    <TextField style={{padding:2,margin:2,marginTop:6,paddingLeft:2}} type='password' variant="outlined" 
+                    onChange={(e)=>setConfirm(e.target.value)}
+                    fullWidth={true} value={confirm} label="Confirm" />
+                    <Button
+                    
+                      onClick={async()=>{
+                        try{
+                          if(confirm!==new_password)
+                          alert('confirm password did not match the new password')
+                          else
+                          {
+                            const resp=await api.put('/admin/editPassword',{
+                              old_password:password,
+                              new_password:new_password
+                            },{
+                              headers:{
+                                "Authorization":"Bearer "+localStorage.getItem("token")
+                              }
+                            })
+                            if(resp.data.msg)
+                            {
+                              console.log("updated successfully");
+                              localStorage.removeItem("token");
+                              window.location="/"
+                            }
+                            else if(resp.data.error){
+                              alert('old password is wrong!')
+                            }
+                            else
+                            {
+                              alert('error !please try again after sometime')
+                            }
+                          }
+                        }catch(err){
+                          console.log(err)
+                        }
+                      }}
+                     style={{float:"right",backgroundColor:"black",marginTop:16}} variant="contained">save changes</Button>
+                  </Card>
+                    
+
+                   
+
+                  
+
+                  </div>    
+
                   return (
                     <div style={{marginTop:96,padding:12,marginLeft:64}}>
                       <IconButton size="large" onClick={()=>navigate('/admin/dashboard')}>
@@ -84,10 +142,23 @@ function Editdetails() {
                       </IconButton>
                       <Typography style={{marginRight:8,fontWeight:"bold"}} variant="h5">Account.</Typography>
                       <Typography style={{marginRight:8}} variant="subtitle2">Edit user details</Typography>
+                      <BottomNavigation
+                      value={toggle}
+                      onChange={(e,newValue)=>{
+                        setToggle(newValue)
+                      }}
+                      >
+                        <BottomNavigationAction label="General" icon={<Badge/>}/>
+                        <BottomNavigationAction label="Security" icon={<Key/>}/>
+
+                      </BottomNavigation>
+                      {toggle==0?
                       <Card variant="outlined" style={{padding:12,margin:12}}>
-                      {toggle==true?about:<></>}
                       
+                      {about}
                       </Card>
+                      :security}
+                      
                      
                       
                     </div>

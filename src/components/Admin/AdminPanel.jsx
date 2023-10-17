@@ -75,7 +75,7 @@ function AdminPanel() {
                             <ListItemIcon>
                               <MenuBook/>
                             </ListItemIcon>
-                            <ListItemText>
+                            <ListItemText >
                              Undergrad at {profile.branch}
                             </ListItemText>
                           </ListItem>

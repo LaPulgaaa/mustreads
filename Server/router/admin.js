@@ -85,6 +85,35 @@ router.put("/editDetails",authenticate,async(req,res)=>{
     else
     res.status(404).send("Admin details not found !!please try again")
 })
+//edit admin password
+router.put("/editPassword",authenticate,async(req,res)=>{
+    const {new_password,old_password}=req.body;
+    try{
+        const admin=await Admin.findOne({"username":req.user.username});
+        
+        if(admin)
+        {
+            const valid=await bycrypt.compare(old_password,admin.password);
+            if(valid==true)
+            {
+                const hashedPassword=await bycrypt.hash(new_password,10);
+                admin.password=hashedPassword;
+                await admin.save();
+                res.status(200).json({msg:"successfully updated password"})
+            }
+            else{
+                res.status(200).json({error:"old password wrong"})
+            }
+            
+        }
+        else{
+            res.status(404).send("admin not found!");
+        }
+    } catch(err)
+    {
+        console.log(err)
+    }
+})
 
 //add notes
 router.post("/createNotes",authenticate,async(req,res)=>{
