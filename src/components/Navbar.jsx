@@ -12,10 +12,10 @@ function Navbar() {
         </div>
        
         <div style={{paddingRight:12}}>
-            <Button style={{marginRight:12}} variant='text'>Read</Button>
+            <Button style={{marginRight:12}} onClick={()=>window.location="/"} variant='text'>home</Button>
             
-            <Button style={{marginRight:12}} variant='text'>Student</Button>
-            <Button style={{marginRight:12}} variant='text'>Admin</Button>
+            <Button style={{marginRight:12}}  variant='text'>Student</Button>
+            <Button style={{marginRight:12}} onClick={()=>navigate('/admin/notes')} variant='text'>Admin</Button>
             <Button style={{marginRight:12}} variant='text'
             onClick={()=>{
               localStorage.removeItem("token")

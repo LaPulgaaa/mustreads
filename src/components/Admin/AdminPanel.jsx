@@ -42,7 +42,7 @@ function AdminPanel() {
 
           </div>
             
-            <Card style={{width:"90%",backgroundColor:"#8caba8",marginRight:124,paddingRight:128}}>
+            <Card style={{width:"90%",backgroundColor:"#f6cd61",marginRight:124,paddingRight:128}}>
                 <CardHeader
                 style={{paddingTop:128,paddingLeft:24,paddingBottom:12,fontWeight:"bold"}}
                 avatar={
