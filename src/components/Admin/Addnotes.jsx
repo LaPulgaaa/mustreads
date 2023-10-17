@@ -1,4 +1,4 @@
-import { Box, Button, Card,TextField } from '@mui/material'
+import { Box, Button, Card,IconButton,TextField } from '@mui/material'
 import Select from '@mui/material/Select'
  import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
@@ -8,6 +8,7 @@ import api from '../../api/api';
 import { useRecoilState } from 'recoil';
 import adminnoteState from '../../store/atom/adminNote';
 import { useNavigate } from 'react-router-dom';
+import { ArrowBack } from '@mui/icons-material';
 function Addnotes() {
     const navigate=useNavigate()
     const [notes,setNotes]=useRecoilState(adminnoteState);
@@ -17,7 +18,10 @@ function Addnotes() {
     const [category,setCategory]=useState('');
   return (
     <div style={{display:"flex",justifyContent:"center"}}>
-        <Card variant='outlined' style={{width:800,margin:48,padding:24}}>
+        
+        <Card variant='outlined' style={{width:800,margin:48,padding:24,backgroundColor:"#f6cd61"}}>
+        <IconButton onClick={()=>navigate('/admin/notes')} 
+        size="large"><ArrowBack/></IconButton>
             <Box style={{padding:6,margin:6,width:320}} sx={{minWidth:120}}>
             <FormControl fullWidth>
             <InputLabel id="type-content" >Category</InputLabel>

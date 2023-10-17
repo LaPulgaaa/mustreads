@@ -32,7 +32,7 @@ function Login() {
           value={admin_password}
           onChange={(e)=>setAdminPassword(e.target.value)}
           label="password" fullWidth={true}/>
-          <Button fullWidth={true}  variant='contained' onClick={async()=>{
+          <Button fullWidth={true} style={{backgroundColor:"black"}}  variant='contained' onClick={async()=>{
             const resp=await api.post("/admin/login",{
               username:adminname,
               password:admin_password
@@ -62,7 +62,7 @@ function Login() {
         </Card>
         </Grid2>
       <Grid2 item  md={12} lg={6} >
-      <Card style={{width:400,padding:24}} sx={{maxWidth:400}} variant='outlined'>
+      <Card style={{width:400,padding:24,backgroundColor:"#f6cd61"}} sx={{maxWidth:400}} variant='outlined'>
 
           <AccountCircle style={{}} fontSize='large'/>
           <Typography style={{display:'flex',justifyContent:'center'}} variant='h6'>User</Typography>
@@ -76,7 +76,7 @@ function Login() {
       value={user_password}
       onChange={(e)=>setUserPassword(e.target.value)}
        fullWidth={true}/>
-      <Button variant='contained' fullWidth={true}>LOG IN</Button>
+      <Button variant='contained' style={{backgroundColor:"black"}} fullWidth={true}>LOG IN</Button>
       <hr/>
           <Typography variant='caption'  >DO NOT HAVE AN ACCOUNT
           <Link style={{paddingLeft:4}} to="/signup" >SIGN UP</Link>

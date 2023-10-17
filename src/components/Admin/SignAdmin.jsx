@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { Grid, Typography,Card,Button,TextField } from '@mui/material'
-import { AdminPanelSettings } from '@mui/icons-material'
+import { Grid, Typography,Card,Button,TextField, IconButton } from '@mui/material'
+import { AdminPanelSettings, ArrowBack } from '@mui/icons-material'
 import { Link, useNavigate } from 'react-router-dom'
 import api from '../../api/api.js'
 function SignAdmin() {
@@ -15,6 +15,7 @@ function SignAdmin() {
     
   return (
     <div style={{marginTop:48}}>
+        <IconButton style={{margin:12}} size='large' onClick={()=>window.location="/"}><ArrowBack/></IconButton>
         <Grid container>
             <Grid item style={{textAlign:"left",padding:48,backgroundColor:"#f6cd61"}} md={6}>
                 <Typography variant='h1'>HELP </Typography>
