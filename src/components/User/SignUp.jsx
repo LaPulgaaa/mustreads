@@ -4,13 +4,13 @@ import {Grid} from '@mui/material';
 
 import React, { useState } from 'react'
 import api from '../../api/api.js';
-import { useSetRecoilState } from 'recoil';
-import User from '../../store/atom/userProfile';
+
+
 import { useNavigate } from 'react-router-dom';
 import { AccountCircle, ArrowBack } from '@mui/icons-material';
 function SignUp() {
     const navigate=useNavigate();
-    const setUserDetails=useSetRecoilState(User);
+    
     const [first,setFirst]=useState('');
     const [last,setLast]=useState('');
     const [username,setUsername]=useState('');
@@ -66,7 +66,7 @@ function SignUp() {
                     }
                     try{
                         const resp=await api.post('/user/signup',userData);
-                        setUserDetails({...userData});
+                        
                         if(resp.status==201)
                         {
                             navigate('/');

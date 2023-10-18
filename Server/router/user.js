@@ -4,6 +4,7 @@ import User from '../models/user.js'
 import Admin from '../models/admin.js'
 import jwt from 'jsonwebtoken'
 import authenticate from '../middleware/authenticate.js';
+import Note from '../models/notes.js';
 const router=express.Router();
 
 
@@ -42,7 +43,7 @@ router.post('/login',async(req,res)=>{
             }
             const token=jwt.sign(payload,process.env.ACCESS_TOKEN_SECRET_USER,{expiresIn:'2h'});
 
-            res.status(200).json({msg:"loggedinsuccessfully",token});
+            res.status(200).json({msg:"loggedinsuccessfully",token,user});
         }
         else
         {
@@ -55,10 +56,26 @@ router.post('/login',async(req,res)=>{
     }
 })
 
+//follow a topper ie .add him to your favorites
 router.get('/addFollowers/:adminId',authenticate,async(req,res)=>{
 
     const adminId=req.params.adminId;
     const admin=await Admin.findById(adminId);
 
+});
+
+//get all the courses of all the admin
+router.get('/notes',authenticate,async(req,res)=>{
+    console.log("have to get all the notes");
+    try{
+        const notes=await Note.find({});
+        res.status(200).json({msg:"all the notes",notes});
+
+    }catch(error)
+    {
+        res.status(400).send("error");
+        console.log(error);
+    }
 })
+
 export default router;
