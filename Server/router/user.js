@@ -10,11 +10,11 @@ const router=express.Router();
 //signup a new user
 router.post("/signup",async(req,res)=>{
         const {name,username,password,branch,batch}=req.body;
-        const hash=await bcrypt.hash(password,10);
+        const hash_password=await bcrypt.hash(password,10);
         const user=await User.create({
             name:name,
             username:username,
-            password:hash,
+            password:hash_password,
             branch:branch,
             batch:batch
         })
@@ -26,9 +26,10 @@ router.post("/signup",async(req,res)=>{
 //login a user
 router.post('/login',async(req,res)=>{
     const {username,password}=req.body;
+   
     const user=await User.findOne({"username":username});
-
-    if(user)
+    console.log(user)
+    if(user!=undefined)
     {
 
         const valid=await bcrypt.compare(password,user.password);

@@ -76,7 +76,26 @@ function Login() {
       value={user_password}
       onChange={(e)=>setUserPassword(e.target.value)}
        fullWidth={true}/>
-      <Button variant='contained' style={{backgroundColor:"black"}} fullWidth={true}>LOG IN</Button>
+      <Button variant='contained'
+      onClick={async()=>{
+        try{
+            const resp=await api.post("/user/login",({
+              username,
+              password:user_password
+            }))
+            if(resp.status==200)
+            {
+              const {token}=resp.data.token;
+              localStorage.setItem("token",token);
+              console.log(resp.data.msg);
+              navigate('/user/home');
+            }
+        }catch(error)
+        {
+          console.log(error);
+        }
+      }}
+       style={{backgroundColor:"black"}} fullWidth={true}>LOG IN</Button>
       <hr/>
           <Typography variant='caption'  >DO NOT HAVE AN ACCOUNT
           <Link style={{paddingLeft:4}} to="/user/signup" >SIGN UP</Link>

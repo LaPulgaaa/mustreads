@@ -9,6 +9,7 @@ import Editnotes from "./components/Admin/Editnotes"
 import AdminPanel from "./components/Admin/AdminPanel"
 import Editdetails from "./components/Admin/Editdetails"
 import SignUp from "./components/User/SignUp"
+import UserHome from "./components/User/UserHome"
 function App() {
   
 
@@ -25,6 +26,7 @@ function App() {
         <Route path={"/admin/dashboard"} element={<AdminPanel/>} />
         <Route path={"/admin/editDetails"} element={<Editdetails/>} />
         <Route path={"/user/signup"} element={<SignUp/>} />
+        <Route path={"/user/home"} element={<UserHome/>} />
       </Routes>
     </div>
     </RecoilRoot>

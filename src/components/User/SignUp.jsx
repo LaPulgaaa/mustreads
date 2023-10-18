@@ -1,4 +1,4 @@
-import { TextField, Typography,Card, Button } from '@mui/material'
+import { TextField, Typography,Card, Button, IconButton } from '@mui/material'
 // import Grid from '@mui/material/Unstable_Grid2/Grid2'
 import {Grid} from '@mui/material';
 
@@ -7,7 +7,7 @@ import api from '../../api/api.js';
 import { useSetRecoilState } from 'recoil';
 import User from '../../store/atom/userProfile';
 import { useNavigate } from 'react-router-dom';
-import { AccountCircle } from '@mui/icons-material';
+import { AccountCircle, ArrowBack } from '@mui/icons-material';
 function SignUp() {
     const navigate=useNavigate();
     const setUserDetails=useSetRecoilState(User);
@@ -19,9 +19,10 @@ function SignUp() {
     const [batch,setBatch]=useState('');
     const [branch,setBranch]=useState('');
   return (
-    <div style={{marginTop:48,display:"flex",alignItems:"center"}}>
+    <div style={{marginTop:48}}>
+        <IconButton size='large' style={{padding:2,margin:16}} onClick={()=>window.location="/"}><ArrowBack/></IconButton>
         <Grid container spacing={2}>
-            <Grid md={6} style={{textAlign:"center",backgroundColor:"#aec993",padding:12}} fontWeight={"bold"}  item>
+            <Grid md={6} style={{textAlign:"center",backgroundColor:"#aec993",padding:12,marginTop:12}} fontWeight={"bold"}  item>
                 <Typography variant='h1'>GET</Typography>
                 <Typography variant='h1'>READY</Typography>
                 <Typography variant='h1'>FOR</Typography>
@@ -65,12 +66,9 @@ function SignUp() {
                     }
                     try{
                         const resp=await api.post('/user/signup',userData);
-                        
+                        setUserDetails({...userData});
                         if(resp.status==201)
                         {
-
-                            const {token}=resp.data;
-                            localStorage.setItem("token",token);
                             navigate('/');
                         }
                         
