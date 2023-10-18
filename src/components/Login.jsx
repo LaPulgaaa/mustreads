@@ -79,7 +79,7 @@ function Login() {
       <Button variant='contained' style={{backgroundColor:"black"}} fullWidth={true}>LOG IN</Button>
       <hr/>
           <Typography variant='caption'  >DO NOT HAVE AN ACCOUNT
-          <Link style={{paddingLeft:4}} to="/signup" >SIGN UP</Link>
+          <Link style={{paddingLeft:4}} to="/user/signup" >SIGN UP</Link>
           </Typography>
       
     </Card>

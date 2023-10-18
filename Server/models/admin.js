@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+import { SchemaTypes } from "mongoose";
 const admin=mongoose.Schema({
     username:{type:String,required:true},
     password:{type:String,required:true,minLength:6},
