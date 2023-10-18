@@ -14,7 +14,7 @@ router.post("/signup",async(req,res)=>{
         const user=await User.create({
             name:name,
             username:username,
-            password:password,
+            password:hash,
             branch:branch,
             batch:batch
         })

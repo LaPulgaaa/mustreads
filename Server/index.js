@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import adminRoute from './router/admin.js'
 import connectDb from './db/dbConnect.js';
+import userRoute from './router/user.js'
 import dotenv from 'dotenv'
 import _ from './env.js'
 // const express=require("express");
@@ -27,7 +28,8 @@ app.use(express.json());
 app.use("/admin",adminRoute);
 app.get("/",(req,res)=>{
     res.status(200).send("welcome to the website")
-})
+});
+app.use("/user",userRoute);
 
 app.listen(3000,()=>{
     console.log("listening to port 3000")
