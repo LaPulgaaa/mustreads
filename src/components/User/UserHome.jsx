@@ -12,7 +12,7 @@ function UserHome() {
    
     const [notes,setNotes]=useState([]);
     const [like,setLike]=useState(false);
-   
+   const [notices,setNotices]=useState([]);
     //get all the courses of the all the admin
     useEffect(()=>{
         async function getNotes(){
@@ -30,6 +30,25 @@ function UserHome() {
                 console.log(error+"error occured!!")
             }
         }
+        async function getNotice(){
+            try{
+                const resp=await api.get("/user/notice",{
+                    headers:{
+                        "Authorization":"Bearer "+localStorage.getItem("token")
+                    }
+                })
+                if(resp.status==200){
+                    const str=[...resp.data.notices];
+                    
+                setNotices([...str]);
+                console.log("notice uploaded")
+                }
+            }catch(err)
+            {
+                console.log(err);
+            }
+        }
+        getNotice();
         getNotes();
     },[])
 
@@ -50,28 +69,33 @@ function UserHome() {
                     }
                     />
                     <CardContent><Typography variant="body2">{note.content}</Typography></CardContent>
-                    <Button variant="text" >Read More</Button>
+                    <Button variant="text" >Read More...</Button>
                     </Card>
             </Grid>
         )
     })
-    const Story=<Grid item md={12}>
-        <Card sx={{maxWidth:"80%"}} variant="elevation">
+    const Story=notices.map((notice)=>{
+        return(
+            <Grid item md={12}>
+        <Card sx={{maxWidth:"80%"}} style={{backgroundColor:"#e9a452"}} variant="elevation">
                     <CardHeader 
                     avatar={
                         <Avatar src={avatar}></Avatar>
                     }
-                    title="Varun Singh"
-                    subheader="EEE-2025"
+                    title={notice.name}
+                    subheader={notice.time}
+                    
                     
                     />
-                    <CardContent><Typography variant="body2">It is to be noted that class viva for cs will be conducted coming monday.</Typography></CardContent>
+                    <CardContent><Typography variant="body2">{notice.announcement}</Typography></CardContent>
         </Card>
     </Grid>
+        )
+    })
   return (
     <div style={{marginTop:48}}>
-        <Grid style={{padding:24,margin:24}} container spacing={2}>
-            <Grid container md={6}>
+        <Grid style={{padding:24,margin:24}} container spacing={4}>
+            <Grid container  md={6}>
                 {NoteGrid}
             </Grid>
             <Grid container md={6}>

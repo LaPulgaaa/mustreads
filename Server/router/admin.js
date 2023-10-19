@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken';
 import bycrypt from 'bcrypt';
 import dotenv from 'dotenv'
 import authenticate from '../middleware/authenticate.js';
+import Notice from '../models/notice.js';
 
 dotenv.config()
 
@@ -178,6 +179,23 @@ router.put("/editNote/:noteId",authenticate,async(req,res)=>{
     else
     res.status(400).send("could not save the note succesfully !!.please try again");
 
+})
+
+//add a notice
+router.post("/notice",authenticate,async(req,res)=>{
+    const {notice}=req.body;
+    try{
+        const new_notice=await Notice.create({
+            by:req.user.id,
+            announcement:notice,
+            name:req.user.username
+        });
+        res.status(201).json({msg:"successfully added notice",new_notice})
+    }catch(err)
+    {
+        res.status(400).send("error occured!");
+    }
+    
 })
 
 

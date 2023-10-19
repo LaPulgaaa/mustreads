@@ -5,6 +5,7 @@ import Admin from '../models/admin.js'
 import jwt from 'jsonwebtoken'
 import authenticate from '../middleware/authenticate.js';
 import Note from '../models/notes.js';
+import Notice from '../models/notice.js';
 const router=express.Router();
 
 
@@ -77,5 +78,15 @@ router.get('/notes',authenticate,async(req,res)=>{
         console.log(error);
     }
 })
+//get all the notices 
 
+router.get("/notice",authenticate,async(req,res)=>{
+    try{
+        const notices=await Notice.find({});
+        res.status(200).json({msg:"successfully found",notices});
+    }catch(err)
+    {
+        res.status(400).send("error occured!")
+    }
+})
 export default router;

@@ -1,6 +1,6 @@
 import {  Box, Card, CardHeader, Typography,Avatar, CardContent, Icon, List, ListItem, ListItemIcon, ListItemText, TextField, IconButton ,} from '@mui/material'
 // import Avatar from '@mui/material'
-import React from 'react'
+import React,{useState} from 'react'
 import {Button} from '@mui/material'
 
 import img from './images/admin.jpg'
@@ -12,12 +12,14 @@ import { useRecoilValue } from 'recoil'
 import admin from '../../store/atom/adminProfile'
 import adminnoteState from '../../store/atom/adminNote'
 import { useNavigate } from 'react-router-dom'
+import api from '../../api/api.js'
 //List-it/src/assets/avatar_25.jpg
 function AdminPanel() {
   const profile=useRecoilValue(admin);
   const note=useRecoilValue(adminnoteState);
   const navigate=useNavigate();
-  console.log(profile)
+  const [notice,setNotice]=useState('');
+  // console.log(profile)
   return (
     <div style={{display:"flex",marginLeft:256,marginTop:32,padding:24}}>
         <Box >
@@ -98,9 +100,24 @@ function AdminPanel() {
                 </Grid>
                 <Grid container md={7}>
                   <Grid item md={12}>
-                    <Card variant="elevation" style={{margin:24,padding:12}}>
-                      <TextField  type='text' variant='outlined' multiline  minRows={4} fullWidth={true} label="Share your thoughts...." />
-                        <Button  variant='contained' style={{backgroundColor:"black",padding:4,margin:8,display:"flex"}}>Post</Button>
+                    <Card sx={{maxWidth:600}} variant="elevation" style={{margin:24,padding:12}}>
+                      <TextField onChange={(e)=>{
+                        setNotice(e.target.value)
+                      }} value={notice} type='text' variant='outlined' multiline  minRows={4} fullWidth={true} label="Announcements" />
+                        <Button onClick={async()=>{
+                          try{
+                            const resp=await api.post("/admin/notice",{notice},{
+                              headers:{
+                                "Authorization":"Bearer "+localStorage.getItem("token")
+                              }
+                            })
+                            if(resp.status==201)
+                            console.log("notice uploaded!");
+                          }catch(error)
+                          {
+                            console.log(error);
+                          }
+                        }}  variant='contained' style={{backgroundColor:"black",padding:4,margin:8,float:"right"}}>Post</Button>
                     </Card>
 
                   </Grid>

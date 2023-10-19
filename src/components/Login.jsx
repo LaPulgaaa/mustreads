@@ -80,11 +80,13 @@ function Login() {
        fullWidth={true}/>
       <Button variant='contained'
       onClick={async()=>{
+        
         try{
             const resp=await api.post("/user/login",({
               username,
               password:user_password
             }))
+              console.log(resp.data)
             if(resp.status==200)
             {
               const {token}=resp.data;
