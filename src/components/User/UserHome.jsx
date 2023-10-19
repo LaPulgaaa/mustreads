@@ -7,9 +7,10 @@ import api from '../../api/api.js';
 import { useState } from 'react';
 import avatar from '../Admin/images/admin.jpg'
 import { Favorite, FavoriteBorder } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 function UserHome() {
     const userData=useRecoilValue(User);
-   
+   const navigate=useNavigate();
     const [notes,setNotes]=useState([]);
     const [like,setLike]=useState(false);
    const [notices,setNotices]=useState([]);
@@ -53,6 +54,7 @@ function UserHome() {
     },[])
 
     const NoteGrid= notes.map((note)=>{
+        const id=note._id;
         return (
             <Grid item md={6}  key={note._id}>
                     <Card style={{backgroundColor:"#f6cd61",margin:4}} variant='outlined' sx={{maxWidth:450}}>
@@ -69,7 +71,7 @@ function UserHome() {
                     }
                     />
                     <CardContent><Typography variant="body2">{note.content}</Typography></CardContent>
-                    <Button variant="text" >Read More...</Button>
+                    <Button variant="text" onClick={()=>navigate(`/user/note/${id}`)} >Read More...</Button>
                     </Card>
             </Grid>
         )

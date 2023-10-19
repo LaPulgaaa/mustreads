@@ -10,6 +10,7 @@ import AdminPanel from "./components/Admin/AdminPanel"
 import Editdetails from "./components/Admin/Editdetails"
 import SignUp from "./components/User/SignUp"
 import UserHome from "./components/User/UserHome"
+import Note from "./components/User/Note"
 function App() {
   
 
@@ -27,6 +28,7 @@ function App() {
         <Route path={"/admin/editDetails"} element={<Editdetails/>} />
         <Route path={"/user/signup"} element={<SignUp/>} />
         <Route path={"/user/home"} element={<UserHome/>} />
+        <Route path={"/user/note/:noteId"} element={<Note/>}/>
       </Routes>
     </div>
     </RecoilRoot>
