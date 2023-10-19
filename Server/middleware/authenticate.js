@@ -9,6 +9,7 @@ function authenticate(req,res,next){
         const token=autheader.split(" ")[1];
         if(token!=undefined)
         {
+            console.log("here inside");
             const verify=jwt.verify(token,process.env.ACCESS_TOKEN_SECRET,(err,user)=>{
                 if(err)
                 res.status(401).send("autherization failed")

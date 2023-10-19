@@ -41,7 +41,7 @@ router.post('/login',async(req,res)=>{
                 password:password,
                 id:user._id
             }
-            const token=jwt.sign(payload,process.env.ACCESS_TOKEN_SECRET_USER,{expiresIn:'2h'});
+            const token=jwt.sign(payload,process.env.ACCESS_TOKEN_SECRET,{expiresIn:'2h'});
 
             res.status(200).json({msg:"loggedinsuccessfully",token,user});
         }

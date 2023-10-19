@@ -87,7 +87,7 @@ function Login() {
             }))
             if(resp.status==200)
             {
-              const {token}=resp.data.token;
+              const {token}=resp.data;
               localStorage.setItem("token",token);
               console.log(resp.data.token);
               const user=resp.data.user;
