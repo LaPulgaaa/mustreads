@@ -12,7 +12,7 @@ function UserHome() {
     const userData=useRecoilValue(User);
    const navigate=useNavigate();
     const [notes,setNotes]=useState([]);
-    const [like,setLike]=useState(false);
+    const [like,setLike]=useState([]);
    const [notices,setNotices]=useState([]);
     //get all the courses of the all the admin
     useEffect(()=>{
@@ -65,8 +65,26 @@ function UserHome() {
                     title={note.topic}
                     subheader={note.course}
                     action={
-                        <IconButton onClick={()=>setLike(!like)}>
-                            {like?<Favorite/>:<FavoriteBorder/>}
+                        <IconButton onClick={()=>{
+                            let rest=[...like];
+                            
+                            if(rest.indexOf(note._id)==-1)
+                            {
+                                rest.push(note._id);
+                                console.log("not present")
+                            }
+                            else
+                            {
+                                
+                                rest=rest.filter((item)=>{
+                                    if(item!==note._id)
+                                    return item;
+                                })
+                            }
+                            
+                            setLike([...rest])
+                        }}>
+                            {like.indexOf(note._id)!=-1?<Favorite/>:<FavoriteBorder/>}
                         </IconButton>
                     }
                     />
