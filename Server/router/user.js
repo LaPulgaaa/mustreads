@@ -78,6 +78,25 @@ router.get('/notes',authenticate,async(req,res)=>{
         console.log(error);
     }
 })
+//get a particular note
+router.get("/note/:noteId",authenticate,async(req,res)=>{
+    const noteId=req.params.noteId
+    try{
+            const note=await Note.findById(noteId);
+            if(note!=undefined)
+            {
+                res.status(200).json({msg:"found",note})
+            }
+            else
+            {
+                res.status(404).send("not found");
+            }
+    }catch(err)
+    {
+        console.log(err);
+        res.status(400).send("error occured")
+    }
+})
 //get all the notices 
 
 router.get("/notice",authenticate,async(req,res)=>{

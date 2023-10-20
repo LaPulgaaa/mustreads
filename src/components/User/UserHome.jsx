@@ -6,10 +6,11 @@ import { useEffect } from 'react';
 import api from '../../api/api.js';
 import { useState } from 'react';
 import avatar from '../Admin/images/admin.jpg'
-import { Favorite, FavoriteBorder } from '@mui/icons-material';
+import { AccountCircle, Favorite, FavoriteBorder } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 function UserHome() {
     const userData=useRecoilValue(User);
+    // console.log(userData)
    const navigate=useNavigate();
     const [notes,setNotes]=useState([]);
     const [like,setLike]=useState([]);
@@ -114,7 +115,10 @@ function UserHome() {
     })
   return (
     <div style={{marginTop:48}}>
-        <Grid style={{padding:24,margin:24}} container spacing={4}>
+        <IconButton  onClick={()=>navigate('/user/detail')}  sx={{float:"right",marginRight:4,backgroundColor:"#aec993"}} size='large'>
+            <AccountCircle fontSize='large'/>
+        </IconButton>
+        <Grid style={{padding:24,margin:24,width:"95%"}} container spacing={4}>
             <Grid container  md={6}>
                 {NoteGrid}
             </Grid>
