@@ -1,5 +1,5 @@
 import React from 'react'
-import { useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import User from '../../store/atom/userProfile'
 import { Avatar, Button, Card, CardContent, CardHeader, Grid, IconButton, Typography } from '@mui/material';
 import { useEffect } from 'react';
@@ -8,6 +8,7 @@ import { useState } from 'react';
 import avatar from '../Admin/images/admin.jpg'
 import { AccountCircle, Favorite, FavoriteBorder } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import userFavs from '../../store/atom/userFavs';
 function UserHome() {
     const userData=useRecoilValue(User);
     // console.log(userData)
@@ -15,6 +16,9 @@ function UserHome() {
     const [notes,setNotes]=useState([]);
     const [like,setLike]=useState([]);
    const [notices,setNotices]=useState([]);
+   const [user,setUser]=useRecoilState(User);
+   const [favs,setFavs]=useRecoilState(userFavs);
+   console.log(user);
     //get all the courses of the all the admin
     useEffect(()=>{
         async function getNotes(){
@@ -26,7 +30,10 @@ function UserHome() {
                 });
                 // console.log(resp.data);
                 if(resp.status==200)
-                setNotes([...resp.data.notes]);
+                {
+                    setNotes([...resp.data.notes]);
+                    setUser({...resp.data.user});
+                }
             }catch(error)
             {
                 console.log(error+"error occured!!")
@@ -71,11 +78,17 @@ function UserHome() {
                             
                             if(rest.indexOf(note._id)==-1)
                             {
+                                setFavs([...favs,note]);
                                 rest.push(note._id);
                                 console.log("not present")
                             }
                             else
                             {
+                                const left_favs=favs.filter((item)=>{
+                                    if(note._id!==item._id)
+                                    return item;
+                                })
+                                setFavs([...left_favs]);
                                 
                                 rest=rest.filter((item)=>{
                                     if(item!==note._id)

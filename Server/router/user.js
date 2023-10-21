@@ -44,7 +44,7 @@ router.post('/login',async(req,res)=>{
             }
             const token=jwt.sign(payload,process.env.ACCESS_TOKEN_SECRET,{expiresIn:'2h'});
 
-            res.status(200).json({msg:"loggedinsuccessfully",token,user});
+            res.status(200).json({msg:"loggedinsuccessfully",token});
         }
         else
         {
@@ -70,7 +70,8 @@ router.get('/notes',authenticate,async(req,res)=>{
     console.log("have to get all the notes");
     try{
         const notes=await Note.find({});
-        res.status(200).json({msg:"all the notes",notes});
+        const user=await User.findOne({"username":req.user.username})
+        res.status(200).json({msg:"all the notes",notes,user});
 
     }catch(error)
     {

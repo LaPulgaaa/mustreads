@@ -9,13 +9,14 @@ import { useRecoilState, useSetRecoilState } from 'recoil'
 import admin from '../store/atom/adminProfile.jsx'
 import User from '../store/atom/userProfile.jsx'
 function Login() {
-  const setuserData=useSetRecoilState(User);
+  // const setuserData=useSetRecoilState(User);
   const navigate=useNavigate();
   const [username,setUsername]=useState('');
   const [user_password,setUserPassword]=useState('');
   const [adminname,setAdminname]=useState('');
   const [admin_password,setAdminPassword]=useState('');
   const [profile,setProfile]=useRecoilState(admin);
+
   // console.log(profile)
   return (
     <div>
@@ -92,8 +93,8 @@ function Login() {
               const {token}=resp.data;
               localStorage.setItem("token",token);
               console.log(resp.data.token);
-              const user=resp.data.user;
-              setuserData({...user})
+              // const user=resp.data.user;
+              // setuserData({...user})
               navigate('/user/home');
             }
         }catch(error)
