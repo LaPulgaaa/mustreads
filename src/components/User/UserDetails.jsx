@@ -21,17 +21,7 @@ const UserDetails = () => {
             avatar={
               <Avatar >{note.category.charAt(0) }</Avatar>
             } 
-            action={
-              <IconButton onClick={()=>{
-                const new_Favs=myFavs.map((liked)=>{
-                  if(liked._id!==note._id)
-                  return liked;
-                })
-                // setMyFavs([...new_Favs]);
-              }}>
-                <Favorite/>
-              </IconButton>
-            }
+            
             title={note.course}
             subheader={note.category}
             />

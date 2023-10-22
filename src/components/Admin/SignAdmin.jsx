@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { Grid, Typography,Card,Button,TextField, IconButton } from '@mui/material'
-import { AdminPanelSettings, ArrowBack } from '@mui/icons-material'
+import { Grid, Typography,Card,Button,TextField, IconButton, CardContent, CardHeader, Avatar } from '@mui/material'
+import { AccountCircle, AdminPanelSettings, ArrowBack } from '@mui/icons-material'
 import { Link, useNavigate } from 'react-router-dom'
 import api from '../../api/api.js'
 function SignAdmin() {
@@ -16,91 +16,106 @@ function SignAdmin() {
   return (
     <div style={{marginTop:48}}>
         <IconButton style={{margin:12}} size='large' onClick={()=>window.location="/"}><ArrowBack/></IconButton>
-        <Grid container>
-            <Grid item style={{textAlign:"left",padding:48,backgroundColor:"#f6cd61"}} md={6}>
-                <Typography variant='h1'>HELP </Typography>
-                <Typography variant='h1'>YOUR </Typography>
-                <Typography variant='h1'>FRIENDS</Typography>
-                <Typography variant='h1'></Typography>
-                <Typography variant='h6' style={{fontWeight:"bold"}}>Add your notes and help your friends for the coming exams
-                </Typography>
-            </Grid>
-            <Grid style={{display:'flex',justifyContent:"center"}} item md={6}>
-                <Card style={{width:400,padding:48,backgroundColor:'#aec993'}} sx={{maxWidth:400}} variant='outlined'>
+       
+            <Card style={{display:"flex",justifyContent:"center",padding:8}} variant="outlined">
+            <Grid  container md={7}>
+               
+                
+               <Grid item md={6}>
+                   <Card style={{width:400,height:"100%",padding:48,backgroundColor:"#f6cd61"}} sx={{maxWidth:400}} variant='outlined'>
+                   <AdminPanelSettings style={{}} fontSize='large'/>
+                   <Typography style={{display:'flex',justifyContent:'center'}} variant='h6'>Admin</Typography>
+                   <CardHeader 
+                   avatar={
+                       <Avatar sx={{width:100,height:100,backgroundColor:"cyan"}}>
+                           <AccountCircle  />
+                       </Avatar>
+                   }
+                   />
+                           <TextField style={{padding:4,margin:4}} value={username} type='text' variant='outlined' label="username" 
+                       fullWidth={true} onChange={(e)=>setUsername(e.target.value)} />
+                       <TextField style={{padding:4,margin:4}} helperText="*atleast 6 digits" value={password} type='password' variant='outlined' label="password"
+                       onChange={(e)=>setPassword(e.target.value)}
+                       fullWidth={true}/>
 
-                    <AdminPanelSettings style={{}} fontSize='large'/>
-                    <Typography style={{display:'flex',justifyContent:'center'}} variant='h6'>Admin</Typography>
+                       <TextField style={{padding:4,margin:4}} value={confirm} type='password' variant='outlined' label="confirm password"
+                       onChange={(e)=>setConfirm(e.target.value)}
+                       fullWidth={true}/>
+                   </Card>
+               </Grid>
 
-                    <TextField style={{padding:4,margin:4}} value={username} type='text' variant='outlined' label="username" 
-                    fullWidth={true} onChange={(e)=>setUsername(e.target.value)} />
-                    <TextField style={{padding:4,margin:4}} helperText="*atleast 6 digits" value={password} type='password' variant='outlined' label="password"
-                    onChange={(e)=>setPassword(e.target.value)}
-                     fullWidth={true}/>
+               <Grid item md={6}>
+               <Card style={{width:400,height:"100%",padding:48,backgroundColor:"#f6cd61"}} sx={{maxWidth:400}} variant='outlined'>
+               <CardContent>
+               
+               <TextField style={{padding:4,margin:4}} value={branch}
+               onChange={(e)=>setBranch(e.target.value)}
+                type='text' variant='outlined' label="Branch" fullWidth={true} />
 
-                    <TextField style={{padding:4,margin:4}} value={confirm} type='password' variant='outlined' label="confirm password"
-                    onChange={(e)=>setConfirm(e.target.value)}
-                     fullWidth={true}/>
-
-                    <TextField style={{padding:4,margin:4}} value={branch}
-                    onChange={(e)=>setBranch(e.target.value)}
-                     type='text' variant='outlined' label="Branch" fullWidth={true} />
-
-                    <TextField style={{padding:4,margin:4}} value={batch}
-                    onChange={(e)=>setBatch(e.target.value)}
-                    type='text' variant='outlined'
-                    helperText="please enter your batch"
-                     label="20**" fullWidth={true} />
+               <TextField style={{padding:4,margin:4}} value={batch}
+               onChange={(e)=>setBatch(e.target.value)}
+               type='text' variant='outlined'
+               helperText="please enter your batch"
+                label="20**" fullWidth={true} />
 
 
-                    <TextField style={{padding:4,margin:4}}  value={email}
-                    onChange={(e)=>setEmail(e.target.value)}
-                    type='text' variant='outlined'
-                    
-                    label="admin@gmail.com" fullWidth={true} />
+               <TextField style={{padding:4,margin:4}}  value={email}
+               onChange={(e)=>setEmail(e.target.value)}
+               type='text' variant='outlined'
+               
+               label="admin@gmail.com" fullWidth={true} />
 
 
-                    <TextField style={{padding:4,margin:4}} multiline minRows={4} value={about}
-                    onChange={(e)=>setAbout(e.target.value)}
-                    type='text' variant='outlined'
-                    
-                     label="write something to share with the world..." fullWidth={true} />
+               <TextField style={{padding:4,margin:4}} multiline minRows={4} value={about}
+               onChange={(e)=>setAbout(e.target.value)}
+               type='text' variant='outlined'
+               
+                label="write something to share with the world..." fullWidth={true} />
 
-                   
-                    <Button
-                     fullWidth={true}  variant='contained' onClick={async()=>{
-                        if(confirm!=password)
-                        {
-                            alert("password enteries do not match!");
-                            setPassword('');
-                            setConfirm('');
-                        }
-                        else{
-                            console.log(username,password,batch,branch)
-                            const body={
-                                username:username,
-                                password:password,
-                                batch:batch,
-                                branch:branch,
-                                about:about
-                            }
-                            const resp=await api.post('/admin/signup',body);
-                            const {token}=resp.data;
-                            console.log(token)
-                            localStorage.setItem("token",token);
-                            
-                            navigate('/admin/notes');
+              
+               <Button
+                fullWidth={true}  variant='contained' onClick={async()=>{
+                   if(confirm!=password)
+                   {
+                       alert("password enteries do not match!");
+                       setPassword('');
+                       setConfirm('');
+                   }
+                   else{
+                       console.log(username,password,batch,branch)
+                       const body={
+                           username:username,
+                           password:password,
+                           batch:batch,
+                           branch:branch,
+                           about:about
+                       }
+                       const resp=await api.post('/admin/signup',body);
+                       const {token}=resp.data;
+                       console.log(token)
+                       localStorage.setItem("token",token);
+                       
+                       navigate('/admin/notes');
 
-                            
+                       
 
-                        }
-                           
-                     }}>SIGN UP</Button>
-                    <hr/>
-                    
+                   }
+                      
+                }}>SIGN UP</Button>
+               </CardContent>
+               </Card>
+               </Grid>
+          
+              
+               
+               <hr/>
+               
 
-                </Card>
-            </Grid>
-        </Grid>
+           
+       </Grid>
+            </Card>
+            
+        
         
         
     </div>
