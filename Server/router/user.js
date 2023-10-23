@@ -12,9 +12,9 @@ const router=express.Router();
 //send details of loggedin user
 
 router.get("/details",authenticate,async(req,res)=>{
-    console.log("request made")
+    
     try{
-        console.log(req.user.username);
+        
         const user=await User.findOne({"username":req.user.username});
         if(user)
         res.status(200).json({msg:"found user details",user})

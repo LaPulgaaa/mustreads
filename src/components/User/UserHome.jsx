@@ -16,9 +16,9 @@ function UserHome() {
     const [notes,setNotes]=useState([]);
     const [like,setLike]=useState([]);
    const [notices,setNotices]=useState([]);
-   const [user,setUser]=useRecoilState(User);
+   const [userNotes,setUserNotes]=useRecoilState(User);
    const [favs,setFavs]=useRecoilState(userFavs);
-   console.log(userData);
+//    console.log(userData);
     //get all the courses of the all the admin
     useEffect(()=>{
         async function getNotes(){
@@ -32,7 +32,7 @@ function UserHome() {
                 if(resp.status==200)
                 {
                     setNotes([...resp.data.notes]);
-                    setUser({...resp.data.user});
+                    setUserNotes([...resp.data.notes]);
                 }
             }catch(error)
             {
@@ -50,7 +50,7 @@ function UserHome() {
                     const str=[...resp.data.notices];
                     
                 setNotices([...str]);
-                console.log("notice uploaded")
+                console.log(str)
                 }
             }catch(err)
             {
