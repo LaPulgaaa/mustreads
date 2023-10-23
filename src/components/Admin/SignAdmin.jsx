@@ -35,7 +35,7 @@ function SignAdmin() {
         if(image!=null)
         {
             const formData=new FormData();
-            formData.append("file",image);
+            formData.append("file",image)
             formData.append("upload_preset","om0fmmkb");
             try{
                const resp= await axios.get("https://api.cloudinary.com/v1_1/dre4asvrb/image/upload",formData);
