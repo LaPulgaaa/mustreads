@@ -18,7 +18,7 @@ function UserHome() {
    const [notices,setNotices]=useState([]);
    const [user,setUser]=useRecoilState(User);
    const [favs,setFavs]=useRecoilState(userFavs);
-   console.log(user);
+   console.log(userData);
     //get all the courses of the all the admin
     useEffect(()=>{
         async function getNotes(){

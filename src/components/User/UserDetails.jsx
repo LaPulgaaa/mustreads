@@ -1,37 +1,59 @@
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Avatar, Card, CardHeader, CardMedia, Grid, List, Typography,ListItem,ListItemIcon,ListItemText, CardContent, IconButton } from '@mui/material'
 import { MenuBook,School,Email, Favorite } from '@mui/icons-material'
 import cover from '../Admin/images/cover.jpg'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import User from '../../store/atom/userProfile'
 import userFavs from '../../store/atom/userFavs'
+import api from '../../api/api'
 const UserDetails = () => {
-    const userDetails=useRecoilValue(User);
+    // const userDetails=useRecoilValue(User);
+    const [userDetails,setUserDetails]=useState({});
    const [myFavs,setMyFavs]=useRecoilState(userFavs);
-    console.log(myFavs);
+    useEffect(()=>{
+      async function getUser(){
+          try{
+            const resp=await api.get("/user/details",{
+              headers:{
+                "Authorization":"Bearer "+localStorage.getItem("token")
+              }
+            })
+            console.log(resp)
+            if(resp.status==200)
+            {
+              setUserDetails({...resp.data.user});
+            }
+
+          }catch(err)
+          {
+            console.log(err)
+          }
+      }
+      getUser();
+    },[])
     console.log(userDetails);
   let list;
-    if(myFavs.length>=1)
-    {
-      list=myFavs.map((note)=>{
-        return(
-          <Card style={{width:"100%",padding:4,margin:4}} variant="elevation">
-            <CardHeader
-            avatar={
-              <Avatar >{note.category.charAt(0) }</Avatar>
-            } 
+    // if(myFavs.length>=1)
+    // {
+    //   list=myFavs.map((note)=>{
+    //     return(
+    //       <Card style={{width:"100%",padding:4,margin:4}} variant="elevation">
+    //         <CardHeader
+    //         avatar={
+    //           <Avatar >{note.category.charAt(0) }</Avatar>
+    //         } 
             
-            title={note.course}
-            subheader={note.category}
-            />
-            <CardContent>
-              <Typography variant="body2">{note.topic}</Typography>
-            </CardContent>
-          </Card>
-        )
-      })
-    }
+    //         title={note.course}
+    //         subheader={note.category}
+    //         />
+    //         <CardContent>
+    //           <Typography variant="body2">{note.topic}</Typography>
+    //         </CardContent>
+    //       </Card>
+    //     )
+    //   })
+    // }
   return (
     <div style={{marginTop:48,display:"flex",flexDirection:"column",alignItems:"center"}}>
         <Typography sx={{padding:8}}  variant="h5">Welcome back, {userDetails.username}</Typography>
@@ -39,7 +61,7 @@ const UserDetails = () => {
         
             <CardMedia component={"img"} height={"304"} image={cover}/>
             <CardHeader  avatar={
-                <Avatar sx={{width:74,height:74,fontWeight:"bold"}}>{userDetails.username.charAt(0)}</Avatar>
+                <Avatar sx={{width:74,height:74,fontWeight:"bold",fontSize:5}}>{userDetails.username}</Avatar>
                 
                 
             }
@@ -73,7 +95,7 @@ const UserDetails = () => {
                 </Card>
                 </Grid>
                 <Grid item md={7}>
-                {list!=undefined?list:<></>}
+                
 
                 </Grid>
             </Grid>
