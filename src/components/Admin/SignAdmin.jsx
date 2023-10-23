@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import { Grid, Typography,Card,Button,TextField, IconButton, CardContent, CardHeader, Avatar } from '@mui/material'
-import { AccountCircle, AdminPanelSettings, ArrowBack } from '@mui/icons-material'
+import { AccountCircle, AddAPhoto, AdminPanelSettings, ArrowBack } from '@mui/icons-material'
 import { Link, useNavigate } from 'react-router-dom'
 import api from '../../api/api.js'
+import styled from '@emotion/styled'
+import axios from 'axios'
 function SignAdmin() {
     const navigate=useNavigate();
     const [username,setUsername]=useState('');
@@ -13,11 +15,45 @@ function SignAdmin() {
     const [email,setEmail]=useState('');
     const [confirm,setConfirm]=useState('');
     
+    const [image,setImage]=useState(null);
+    console.log(image)
+    const VisuallyHidden = styled('input')({
+        clip: 'rect(0 0 0 0)',
+        clipPath: 'inset(50%)',
+        height: 1,
+        overflow: 'hidden',
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        whiteSpace: 'nowrap',
+        width: 1,
+      });
+      async function uploadImage(e)
+      {
+        
+        setImage(e.target.files[0]);
+        if(image!=null)
+        {
+            const formData=new FormData();
+            formData.append("file",image);
+            formData.append("upload_preset","om0fmmkb");
+            try{
+               const resp= await axios.get("https://api.cloudinary.com/v1_1/dre4asvrb/image/upload",formData);
+               console.log(resp)
+            }catch(err)
+            {
+                console.log(err);
+            }
+        }
+
+        
+      }
+    
   return (
-    <div style={{marginTop:48}}>
+    <div style={{margin:48}}>
         <IconButton style={{margin:12}} size='large' onClick={()=>window.location="/"}><ArrowBack/></IconButton>
        
-            <Card style={{padding:8}} variant="outlined">
+            <Card style={{padding:8,margin:12,backgroundColor:"#f6cd61"}} variant="outlined">
             <Grid  container  style={{display:"flex"}} spacing={4}>
                
                 
@@ -26,13 +62,21 @@ function SignAdmin() {
                    <AdminPanelSettings style={{}} fontSize='large'/>
                    <Typography style={{display:'flex',justifyContent:'center'}} variant='h6'>Admin</Typography>
                    <CardHeader 
+                   
                    avatar={
-                       <Avatar sx={{width:100,height:100,backgroundColor:"cyan"}}>
-                           <AccountCircle  />
+                       <Avatar sx={{width:60,height:60}}>
+                           
                        </Avatar>
                    }
+                   action={
+                    <Button component="label" startIcon={<AddAPhoto/>} >
+                        
+                        Upload profile image
+                        <VisuallyHidden onChange={uploadImage} type="file"/>
+                    </Button>
+                   }
                    />
-                           <TextField style={{padding:4,margin:4}} value={username} type='text' variant='outlined' label="username" 
+                        <TextField style={{padding:4,margin:4}} value={username} type='text' variant='outlined' label="username" 
                        fullWidth={true} onChange={(e)=>setUsername(e.target.value)} />
                        <TextField style={{padding:4,margin:4}} helperText="*atleast 6 digits" value={password} type='password' variant='outlined' label="password"
                        onChange={(e)=>setPassword(e.target.value)}
@@ -74,6 +118,7 @@ function SignAdmin() {
 
               
                <Button
+               sx={{backgroundColor:"black"}}
                 fullWidth={true}  variant='contained' onClick={async()=>{
                    if(confirm!=password)
                    {
