@@ -17,12 +17,12 @@ function SignAdmin() {
     <div style={{marginTop:48}}>
         <IconButton style={{margin:12}} size='large' onClick={()=>window.location="/"}><ArrowBack/></IconButton>
        
-            <Card style={{display:"flex",justifyContent:"center",padding:8}} variant="outlined">
-            <Grid  container md={7}>
+            <Card style={{padding:8}} variant="outlined">
+            <Grid  container  style={{display:"flex"}} spacing={4}>
                
                 
                <Grid item md={6}>
-                   <Card style={{width:400,height:"100%",padding:48,backgroundColor:"#f6cd61"}} sx={{maxWidth:400}} variant='outlined'>
+                  
                    <AdminPanelSettings style={{}} fontSize='large'/>
                    <Typography style={{display:'flex',justifyContent:'center'}} variant='h6'>Admin</Typography>
                    <CardHeader 
@@ -41,11 +41,11 @@ function SignAdmin() {
                        <TextField style={{padding:4,margin:4}} value={confirm} type='password' variant='outlined' label="confirm password"
                        onChange={(e)=>setConfirm(e.target.value)}
                        fullWidth={true}/>
-                   </Card>
+                   
                </Grid>
 
                <Grid item md={6}>
-               <Card style={{width:400,height:"100%",padding:48,backgroundColor:"#f6cd61"}} sx={{maxWidth:400}} variant='outlined'>
+               
                <CardContent>
                
                <TextField style={{padding:4,margin:4}} value={branch}
@@ -103,7 +103,7 @@ function SignAdmin() {
                       
                 }}>SIGN UP</Button>
                </CardContent>
-               </Card>
+              
                </Grid>
           
               
