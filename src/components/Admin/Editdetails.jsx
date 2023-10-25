@@ -71,7 +71,7 @@ function Editdetails() {
 
                       <Button component="label" >
                         
-                        Upload profile image
+                        Updata profile 
                         <VisuallyHidden onChange={uploadImage} type="file"/>
                     </Button>
                       

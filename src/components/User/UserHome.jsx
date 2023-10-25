@@ -9,6 +9,7 @@ import avatar from '../Admin/images/admin.jpg'
 import { AccountCircle, Favorite, FavoriteBorder } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import userFavs from '../../store/atom/userFavs';
+import { Image } from 'cloudinary-react';
 function UserHome() {
     const userData=useRecoilValue(User);
     // console.log(userData)
@@ -33,6 +34,7 @@ function UserHome() {
                 {
                     setNotes([...resp.data.notes]);
                     setUserNotes([...resp.data.notes]);
+                    console.log([...resp.data.notes]);
                 }
             }catch(error)
             {
@@ -62,13 +64,17 @@ function UserHome() {
     },[])
 
     const NoteGrid= notes.map((note)=>{
+
+        
         const id=note._id;
         return (
             <Grid item md={6}  key={note._id}>
                     <Card style={{backgroundColor:"#f6cd61",margin:4}} variant='outlined' sx={{maxWidth:450}}>
                     <CardHeader 
                     avatar={
-                        <Avatar src={avatar}></Avatar>
+                        <Avatar sx={{width:52,height:52}}>
+                            <Image cloudName="dre4asvrb" publicId={note.publicId} />
+                        </Avatar>
                     }
                     title={note.topic}
                     subheader={note.course}

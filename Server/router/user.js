@@ -127,4 +127,7 @@ router.get("/notice",authenticate,async(req,res)=>{
         res.status(400).send("error occured!")
     }
 })
+
+
+
 export default router;

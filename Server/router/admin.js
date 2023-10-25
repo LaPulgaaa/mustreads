@@ -130,7 +130,8 @@ router.post("/createNotes",authenticate,async(req,res)=>{
         topic:topic,
         content:content,
         category:category,
-        admin:admin._id
+        admin:admin._id,
+        publicId:admin.publicId
     });
     res.status(201).json({msg:"new notes added successfully",new_note});
     

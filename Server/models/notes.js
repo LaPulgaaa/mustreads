@@ -7,7 +7,8 @@ const notes=mongoose.Schema({
     content:{type:String},
     published:{type:Boolean,default:false},
     category:{type:String,default:"Notes"},
-    admin:{type:SchemaTypes.ObjectId,ref:"Admin"}
+    admin:{type:SchemaTypes.ObjectId,ref:"Admin"},
+    publicId:{type:String,default:""}
 })
 
 const Note=mongoose.model("Note",notes);
