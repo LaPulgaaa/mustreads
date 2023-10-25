@@ -20,7 +20,7 @@ router.get("/intro",(req,res)=>{
 
 router.post("/signup",async(req,res)=>{
     console.log(req.body)
-    const {username,password,batch,branch,about,email}=req.body;
+    const {username,password,batch,branch,about,email,publicId}=req.body;
 
     const hashedPassword=await bycrypt.hash(password,10);
     const admin=await Admin.create({
@@ -29,7 +29,8 @@ router.post("/signup",async(req,res)=>{
         batch:batch,
         branch:branch,
         about:about,
-        email:email
+        email:email,
+        publicId:publicId
     })
     const payload={
         username,
@@ -59,7 +60,7 @@ router.post("/login",async(req,res)=>{
                 id:user._id
             }
             const new_token=jwt.sign(payload,process.env.ACCESS_TOKEN_SECRET,{expiresIn:"1h"});
-            res.status(200).json({msg:`logged in user with user id-${user._id}`,token:new_token,user});
+            res.status(200).json({msg:`logged in user with user id-${user._id}`,token:new_token,user:user});
         }
         else
         res.status(401).send("password wrong!")

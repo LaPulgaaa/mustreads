@@ -7,7 +7,8 @@ const admin=mongoose.Schema({
     batch:{type:Number,required:true},
     about:{type:String,default:""},
     email:{type:String,default:"admin123@gmail.com"},
-    follower:{type:SchemaTypes.ObjectId,ref:"User"}
+    follower:{type:SchemaTypes.ObjectId,ref:"User"},
+    publicId:{type:String,default:""}
 })
 
 const Admin=mongoose.model("admin",admin);

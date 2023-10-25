@@ -41,13 +41,14 @@ function Login() {
               password:admin_password
             });
             const {token,user}=resp.data;
-            // console.log(user);
+           console.log(user);
             const entry={
               username:user.username,
               branch:user.branch,
               batch:user.batch,
               about:user.about,
-              email:user.email
+              email:user.email,
+              publicId:user.publicId
               
             }
 

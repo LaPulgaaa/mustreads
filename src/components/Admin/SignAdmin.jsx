@@ -15,8 +15,9 @@ function SignAdmin() {
     const [email,setEmail]=useState('');
     const [confirm,setConfirm]=useState('');
     
-    const [image,setImage]=useState(null);
-    console.log(image)
+    const [id,setId]=useState(null);
+
+   
     const VisuallyHidden = styled('input')({
         clip: 'rect(0 0 0 0)',
         clipPath: 'inset(50%)',
@@ -30,21 +31,22 @@ function SignAdmin() {
       });
       async function uploadImage(e)
       {
+        console.log(e.target.files[0]);
         
-        setImage(e.target.files[0]);
-        if(image!=null)
-        {
             const formData=new FormData();
-            formData.append("file",image)
-            formData.append("upload_preset","om0fmmkb");
+            formData.append("file",e.target.files[0])
+            formData.append("upload_preset","sk9tljyv");
             try{
-               const resp= await axios.get("https://api.cloudinary.com/v1_1/dre4asvrb/image/upload",formData);
-               console.log(resp)
+               const resp= await axios.post("https://api.cloudinary.com/v1_1/dre4asvrb/image/upload",formData);
+               console.log(resp);
+               if(resp.status==200)
+               {
+                setId(resp.data.public_id);
+               }
             }catch(err)
             {
                 console.log(err);
             }
-        }
 
         
       }
@@ -133,7 +135,8 @@ function SignAdmin() {
                            password:password,
                            batch:batch,
                            branch:branch,
-                           about:about
+                           about:about,
+                           publicId:id
                        }
                        const resp=await api.post('/admin/signup',body);
                        const {token}=resp.data;

@@ -13,13 +13,14 @@ import admin from '../../store/atom/adminProfile'
 import adminnoteState from '../../store/atom/adminNote'
 import { useNavigate } from 'react-router-dom'
 import api from '../../api/api.js'
+import { Image } from 'cloudinary-react'
 //List-it/src/assets/avatar_25.jpg
 function AdminPanel() {
   const profile=useRecoilValue(admin);
   const note=useRecoilValue(adminnoteState);
   const navigate=useNavigate();
   const [notice,setNotice]=useState('');
-  // console.log(profile)
+  console.log(profile)
   return (
     <div style={{display:"flex",marginLeft:256,marginTop:32,padding:24}}>
         <Box >
@@ -48,8 +49,8 @@ function AdminPanel() {
                 <CardHeader
                 style={{paddingTop:128,paddingLeft:24,paddingBottom:12,fontWeight:"bold"}}
                 avatar={
-                    <Avatar src={img} sx={{width:108,height:108}} aria-label="profile pic">
-                            
+                    <Avatar  sx={{width:108,height:108}} aria-label="profile pic">
+                            <Image  cloudName="dre4asvrb" publicId={profile.publicId}/>
                     </Avatar>
                 }
                 title={profile.username}

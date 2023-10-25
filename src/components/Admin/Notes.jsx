@@ -13,7 +13,7 @@ import admin from '../../store/atom/adminProfile.jsx'
 function Notes() {
     const navigate=useNavigate();
     const profile=useRecoilValue(admin);
-    // console.log(profile)
+     console.log(profile)
     const notes=useRecoilValue(adminnoteState);
     console.log(notes)
     const setNotes=useSetRecoilState(adminnoteState);
