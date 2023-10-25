@@ -8,9 +8,13 @@ import admin from '../../store/atom/adminProfile.jsx';
 import api from '../../api/api.js';
 import { useNavigate } from 'react-router-dom';
 import { ArrowBack, Badge, Key } from '@mui/icons-material';
+import { Image } from 'cloudinary-react';
+import styled from '@emotion/styled';
+import axios from 'axios';
 function Editdetails() {
   const navigate=useNavigate();
   const [adminData,setAdmindata]=useRecoilState(admin);
+  console.log(adminData);
   const [toggle,setToggle]=useState(0);
   const [batch,setBatch]=useState(adminData.batch);
   const [branch,setBranch]=useState(adminData.branch);
@@ -19,16 +23,57 @@ function Editdetails() {
   const [password,setPassword]=useState('');
   const [new_password,setNewPassword]=useState('');
   const [confirm,setConfirm]=useState('');
+  const [publicId,setPublicId]=useState(adminData.publicId);
   
+  const VisuallyHidden = styled('input')({
+    clip: 'rect(0 0 0 0)',
+    clipPath: 'inset(50%)',
+    height: 1,
+    overflow: 'hidden',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    whiteSpace: 'nowrap',
+    width: 1,
+  });
+
+  async function uploadImage(e)
+      {
+        console.log(e.target.files[0]);
+        
+            const formData=new FormData();
+            formData.append("file",e.target.files[0])
+            formData.append("upload_preset","sk9tljyv");
+            try{
+               const resp= await axios.post("https://api.cloudinary.com/v1_1/dre4asvrb/image/upload",formData);
+               console.log(resp);
+               if(resp.status==200)
+               {
+                setPublicId(resp.data.public_id);
+               }
+            }catch(err)
+            {
+                console.log(err);
+            }
+
+        
+      }
+
   const about=<div>
                 <Grid container spacing={2}>
                   <Grid item md={4}>
                     <Card style={{padding:24,display:"flex",flexDirection:"column",alignItems:"center", justifyContent:"center",fontWeight:"bold",height:"70%"}} variant="elevation">
-                      <Avatar src={avatar} sx={{width:128,height:128,margin:4}}>
-                      
+                      <Avatar component={"label"}  sx={{width:128,height:128,margin:4,cursor:"pointer"}}>
+                      <Image cloudName="dre4asvrb" publicId={adminData.publicId}  />
                       </Avatar>
                       <Typography variant="caption">*upload image less than 1mb</Typography>
                       <Typography variant="subtitle1">{adminData.username}</Typography>
+
+                      <Button component="label" >
+                        
+                        Upload profile image
+                        <VisuallyHidden onChange={uploadImage} type="file"/>
+                    </Button>
                       
                     </Card>
                    
@@ -48,7 +93,8 @@ function Editdetails() {
                             batch:batch,
                             about:share,
                             branch:branch,
-                            email:email
+                            email:email,
+                            publicId:publicId
                           }
 
                           const resp=await api.put("/admin/editDetails",body,{

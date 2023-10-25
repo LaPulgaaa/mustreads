@@ -143,7 +143,7 @@ function SignAdmin() {
                        console.log(token)
                        localStorage.setItem("token",token);
                        
-                       navigate('/admin/notes');
+                       navigate('/');
 
                        
 

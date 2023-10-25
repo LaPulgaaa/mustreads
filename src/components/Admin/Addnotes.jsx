@@ -51,7 +51,7 @@ function Addnotes() {
                 setContent(e.target.value)
             }} style={{padding:6,margin:6}} multiline  maxRows={8} variant="outlined" type='text' fullWidth={true} label="Add Content" />
 
-            <Button style={{marginTop:12}} variant="contained"
+            <Button style={{marginTop:12,backgroundColor:"black"}} variant="contained"
              fullWidth={true}
              onClick={async()=>{
                 const note={

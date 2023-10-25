@@ -71,7 +71,7 @@ router.post("/login",async(req,res)=>{
 
 //edit admin details
 router.put("/editDetails",authenticate,async(req,res)=>{
-    const {batch,branch,about,email}=req.body;
+    const {batch,branch,about,email,publicId}=req.body;
 
     const admin=await Admin.findOne({"username":req.user.username});
     if(admin)
@@ -80,6 +80,7 @@ router.put("/editDetails",authenticate,async(req,res)=>{
         admin.about=about;
         admin.branch=branch;
         admin.email=email;
+        admin.publicId=publicId;
         await admin.save();
 
         res.status(200).json({msg:"details updated succesfully",admin});
