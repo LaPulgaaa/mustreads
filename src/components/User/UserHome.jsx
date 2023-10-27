@@ -118,7 +118,8 @@ function UserHome() {
                             
                             setLike([...rest])
                         }}>
-                            {like.indexOf(note._id)!=-1?<Favorite/>:<FavoriteBorder/>}
+                            {/* {like.indexOf(note._id)!=-1?<Favorite/>:<FavoriteBorder/>} */}
+                            {(note.published==true)|| (like.indexOf(note._id)!=-1) ?<Favorite/>:<FavoriteBorder/>}
                         </IconButton>
                     }
                     />

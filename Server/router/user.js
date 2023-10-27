@@ -138,12 +138,43 @@ router.get("/addFav/:noteId",authenticate,async(req,res)=>{
 
     if(note && user)
     {
+        note.published=true;
+        await note.save();
         user.favs=[...user.favs,note];
         await user.save();
         res.status(200).json({msg:"successfully added to favorites",note});
     }
     else{
         res.status(404).send("user or note not found");
+    }
+})
+
+//remove from favs
+
+router.get('/removeFavs/:noteId',authenticate,async (req,res)=>{
+    const noteId=req.params.noteId;
+
+    try{
+        const fav=await Note.findById(noteId);
+    const user=await User.findOne({"username":req.user.username});
+    if(fav && user)
+    {
+        fav.published=false;
+        await fav.save();
+        user.favs=user.favs.filter((note)=>{
+            if(note._id!==fav._id)
+            return note
+        })
+
+        await user.save();
+        res.status(201).json({msg:"removed from favorite",fav});
+    }
+    else
+    res.status(404).send("note or user not found ");
+
+    }catch(err)
+    {
+        res.status(400).send(err);
     }
 })
 
