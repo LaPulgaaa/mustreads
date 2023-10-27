@@ -8,6 +8,7 @@ import User from '../../store/atom/userProfile'
 import userFavs from '../../store/atom/userFavs'
 import api from '../../api/api'
 import { useNavigate } from 'react-router-dom'
+import { Image } from 'cloudinary-react'
 const UserDetails = () => {
     const navigate=useNavigate();
     const notes=useRecoilValue(User);
@@ -44,7 +45,7 @@ const UserDetails = () => {
               "Authorization":"Bearer "+localStorage.getItem("token")
             }
           })
-          console.log(resp.data.favs)
+          setMyFavs([...resp.data.favs]);
         }catch(err)
         {
           console.log(err);
@@ -53,28 +54,27 @@ const UserDetails = () => {
 
       getFavs();
     },[])
-    // console.log(userDetails);
-  let list;
-    // if(myFavs.length>=1)
-    // {
-    //   list=myFavs.map((note)=>{
-    //     return(
-    //       <Card style={{width:"100%",padding:4,margin:4}} variant="elevation">
-    //         <CardHeader
-    //         avatar={
-    //           <Avatar >{note.category.charAt(0) }</Avatar>
-    //         } 
-            
-    //         title={note.course}
-    //         subheader={note.category}
-    //         />
-    //         <CardContent>
-    //           <Typography variant="body2">{note.topic}</Typography>
-    //         </CardContent>
-    //       </Card>
-    //     )
-    //   })
-    // }
+    
+    const dispFavs=myFavs.map((item)=>{
+      return(
+        <Card sx={{maxWidth:600,padding:4,margin:2,width:"98%"}} key={item._id}>
+          <CardHeader
+          avatar={
+            <Avatar sx={{width:72,height:72}}>
+              <Image cloudName="dre4asvrb" publicId={item.publicId}/>
+            </Avatar>
+          }
+          title={item.topic}
+          subheader={item.course}
+          />
+          <CardContent>
+            <Typography variant="body2">{item.content}</Typography>
+          </CardContent>
+        </Card>
+      )
+    })
+ 
+   
   return (
     <div style={{marginTop:48,display:"flex",flexDirection:"column",alignItems:"center"}}>
      
@@ -123,7 +123,7 @@ const UserDetails = () => {
                 </Card>
                 </Grid>
                 <Grid item md={7}>
-                
+                {dispFavs}
 
                 </Grid>
             </Grid>
