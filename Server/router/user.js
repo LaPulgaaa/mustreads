@@ -128,6 +128,42 @@ router.get("/notice",authenticate,async(req,res)=>{
     }
 })
 
+//add a note to user's schema profile
+router.get("/addFav/:noteId",authenticate,async(req,res)=>{
+    console.log("inside the fav endpoint");
+    const noteId=req.params.noteId;
+
+    const user=await User.findOne({"username":req.user.username});
+    const note=await Note.findById(noteId);
+
+    if(note && user)
+    {
+        user.favs=[...user.favs,note];
+        await user.save();
+        res.status(200).json({msg:"successfully added to favorites",note});
+    }
+    else{
+        res.status(404).send("user or note not found");
+    }
+})
+
+//get the fav notes 
+
+router.get('/getFavs',authenticate,async(req,res)=>{
+    try{
+        const user=await User.findOne({"username":req.user.username}).populate('favs').exec();
+      
+        if(user)
+        {
+            const favs=user.favs;
+            res.status(200).json({msg:"successfull fetched favs",favs});
+        }
+    }catch(err)
+    {
+        console.log("something is wrong ");
+        res.status(400).send("error occured");
+    }
+})
 
 
 export default router;

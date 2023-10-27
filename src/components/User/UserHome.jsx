@@ -79,7 +79,7 @@ function UserHome() {
                     title={note.topic}
                     subheader={note.course}
                     action={
-                        <IconButton onClick={()=>{
+                        <IconButton onClick={async()=>{
                             let rest=[...like];
                             
                             if(rest.indexOf(note._id)==-1)
@@ -87,6 +87,20 @@ function UserHome() {
                                 setFavs([...favs,note]);
                                 rest.push(note._id);
                                 console.log("not present")
+                                try{
+                                    const resp=await api.get(`/user/addFav/${note._id}`,{
+                                        headers:{
+                                            "Authorization":"Bearer "+localStorage.getItem("token")
+                                        }
+                                    })
+                                    if(resp.status==200)
+                                    console.log(resp.data.msg);
+
+                                }catch(err)
+                                {
+                                    console.log(err);
+                                }
+
                             }
                             else
                             {

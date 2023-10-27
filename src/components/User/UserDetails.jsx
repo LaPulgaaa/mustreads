@@ -36,6 +36,23 @@ const UserDetails = () => {
       }
       getUser();
     },[])
+    useEffect(()=>{
+      async function getFavs(){
+        try{
+          const resp=await api.get('/user/getFavs',{
+            headers:{
+              "Authorization":"Bearer "+localStorage.getItem("token")
+            }
+          })
+          console.log(resp.data.favs)
+        }catch(err)
+        {
+          console.log(err);
+        }
+      }
+
+      getFavs();
+    },[])
     // console.log(userDetails);
   let list;
     // if(myFavs.length>=1)

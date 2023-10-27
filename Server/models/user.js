@@ -1,11 +1,12 @@
-import mongoose from "mongoose";
+import mongoose, { SchemaTypes } from "mongoose";
 
 const user=mongoose.Schema({
     name:{type:String,required:true},
     username:{type:String,required:true},
     password:{type:String,required:true},
     branch:{type:String},
-    batch:{type:Number,default:"hello everyone .I like to study and get good marks "}
+    batch:{type:Number},
+    favs:[{type:SchemaTypes.ObjectId,ref:"Note"}]
 })
 
 const User=mongoose.model("User",user);

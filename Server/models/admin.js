@@ -5,7 +5,7 @@ const admin=mongoose.Schema({
     password:{type:String,required:true,minLength:6},
     branch:{type:String,required:true},
     batch:{type:Number,required:true},
-    about:{type:String,default:""},
+    about:{type:String,default:"I love to study and get good grades"},
     email:{type:String,default:"admin123@gmail.com"},
     follower:{type:SchemaTypes.ObjectId,ref:"User"},
     publicId:{type:String,default:""}
