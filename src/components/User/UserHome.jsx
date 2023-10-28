@@ -18,8 +18,8 @@ function UserHome() {
     const [like,setLike]=useState([]);
    const [notices,setNotices]=useState([]);
    const [userNotes,setUserNotes]=useRecoilState(User);
-   const [favs,setFavs]=useRecoilState(userFavs);
-//    console.log(userData);
+   const [favs,setFavs]=useState([]);
+   console.log(favs);
     //get all the courses of the all the admin
     useEffect(()=>{
         async function getNotes(){
@@ -64,7 +64,7 @@ function UserHome() {
     },[])
 
     const NoteGrid= notes.map((note)=>{
-
+        
         
         const id=note._id;
         return (
@@ -79,47 +79,59 @@ function UserHome() {
                     title={note.topic}
                     subheader={note.course}
                     action={
+                        
                         <IconButton onClick={async()=>{
-                            let rest=[...like];
-                            
-                            if(rest.indexOf(note._id)==-1)
+                             
+                            if(note.published==false)
                             {
-                                setFavs([...favs,note]);
-                                rest.push(note._id);
-                                console.log("not present")
+                                
+                                
                                 try{
                                     const resp=await api.get(`/user/addFav/${note._id}`,{
                                         headers:{
                                             "Authorization":"Bearer "+localStorage.getItem("token")
                                         }
                                     })
+                                    setFavs([...resp.data.new_favs])
                                     if(resp.status==200)
-                                    console.log(resp.data.msg);
+                                    {
+                                        console.log(resp.data.new_favs);
+                                        
+                                    }
+                                    
 
                                 }catch(err)
                                 {
                                     console.log(err);
                                 }
-
                             }
                             else
                             {
-                                const left_favs=favs.filter((item)=>{
-                                    if(note._id!==item._id)
-                                    return item;
-                                })
-                                setFavs([...left_favs]);
                                 
-                                rest=rest.filter((item)=>{
-                                    if(item!==note._id)
-                                    return item;
-                                })
+                                try{
+                                    const resp=await api.get(`/user/removeFav/${note._id}`,{
+                                        headers:{
+                                            "Authorization":"Bearer "+localStorage.getItem("token")
+                                        }
+                                    });
+                                    setFavs([...resp.data.new_favs]);
+                                    if(resp.status==200)
+                                    {
+                                        console.log(resp.data.new_favs);
+                                        
+                                    }
+
+
+                                }catch(err)
+                                {
+                                    console.log(err);
+                                }
                             }
+
                             
-                            setLike([...rest])
                         }}>
                             {/* {like.indexOf(note._id)!=-1?<Favorite/>:<FavoriteBorder/>} */}
-                            {(note.published==true)|| (like.indexOf(note._id)!=-1) ?<Favorite/>:<FavoriteBorder/>}
+                            {(note.published==true) ?<Favorite/>:<FavoriteBorder/>}
                         </IconButton>
                     }
                     />

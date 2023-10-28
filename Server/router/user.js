@@ -130,7 +130,7 @@ router.get("/notice",authenticate,async(req,res)=>{
 
 //add a note to user's schema profile
 router.get("/addFav/:noteId",authenticate,async(req,res)=>{
-    console.log("inside the fav endpoint");
+    console.log("to add to favorites");
     const noteId=req.params.noteId;
 
     const user=await User.findOne({"username":req.user.username});
@@ -140,9 +140,12 @@ router.get("/addFav/:noteId",authenticate,async(req,res)=>{
     {
         note.published=true;
         await note.save();
-        user.favs=[...user.favs,note];
+        const new_favs=[...user.favs,note._id];
+        user.favs=new_favs;
         await user.save();
-        res.status(200).json({msg:"successfully added to favorites",note});
+        console.log(new_favs);
+        
+        res.status(200).json({msg:"successfully added to favorites",new_favs});
     }
     else{
         res.status(404).send("user or note not found");
@@ -151,25 +154,31 @@ router.get("/addFav/:noteId",authenticate,async(req,res)=>{
 
 //remove from favs
 
-router.get('/removeFavs/:noteId',authenticate,async (req,res)=>{
+router.get('/removeFav/:noteId',authenticate,async (req,res)=>{
+    console.log("to remove from favs")
     const noteId=req.params.noteId;
 
     try{
         const fav=await Note.findById(noteId);
+        console.log(fav);
     const user=await User.findOne({"username":req.user.username});
     if(fav && user)
     {
         fav.published=false;
-        await fav.save();
-        user.favs=user.favs.filter((note)=>{
-            if(note._id!==fav._id)
+        await fav.save()
+        const new_favs=user.favs.filter((note)=>{
+            console.log(note._id+"---"+fav._id);
+            if(note._id!=fav._id)
             return note
         })
-
+        user.favs=new_favs;
         await user.save();
-        res.status(201).json({msg:"removed from favorite",fav});
+        console.log(new_favs)
+        // const new_favs=user.favs;
+        res.status(200).json({msg:"removed from favorite",new_favs});
     }
     else
+
     res.status(404).send("note or user not found ");
 
     }catch(err)
