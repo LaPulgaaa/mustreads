@@ -206,4 +206,47 @@ router.get('/getFavs',authenticate,async(req,res)=>{
 })
 
 
+
+//edit user details
+
+router.put('/editDetails',authenticate,async(req,res)=>{
+    const {batch,branch,name}=req.body;
+
+    const user=await User.findOne({"username":req.user.username});
+    if(user)
+    {
+        user.batch=batch;
+        user.branch=branch;
+        user.name=name;
+        await user.save();
+
+        res.status(200).send("user details updated successfully");
+    }
+    else
+    res.status(404).send("user not found");
+})
+
+//edit password or username
+router.put('/editSecurity',authenticate,async(req,res)=>{
+    const {username,old_pass,new_pass}=req.body;
+
+    const user=await User.findOne({"username":username});
+    const {password}=user;
+
+    const compare=await bcrypt.compare(old_pass,password);
+    if(compare==true)
+    {
+        user.username=username;
+        const hash=await bcrypt.hash(new_pass,10);
+        user.password=hash;
+        await user.save();
+
+        res.status(201).send("updated successfully.");
+    }
+    else
+    res.status(401).send("wrong username or password")
+
+
+})
+
 export default router;
