@@ -7,11 +7,12 @@ import { Route,Routes } from "react-router-dom"
 import Addnotes from "./components/Admin/Addnotes"
 import Editnotes from "./components/Admin/Editnotes"
 import AdminPanel from "./components/Admin/AdminPanel"
-import Editdetails from "./components/Admin/Editdetails"
+import Editdetails from "./components/Admin/EditDetails"
 import SignUp from "./components/User/SignUp"
 import UserHome from "./components/User/UserHome"
 import Note from "./components/User/Note"
 import UserDetails from "./components/User/UserDetails"
+import EditUserdetails from "./components/User/EditUserdetails"
 function App() {
   
 
@@ -31,6 +32,7 @@ function App() {
         <Route path={"/user/home"} element={<UserHome/>} />
         <Route path={"/user/note/:noteId"} element={<Note/>}/>
         <Route path={"/user/detail"} element={<UserDetails/>} />
+        <Route path={"/user/editUserDetails"} element={<EditUserdetails/>} />
       </Routes>
     </div>
     </RecoilRoot>

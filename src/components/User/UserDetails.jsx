@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { Avatar, Card, CardHeader, CardMedia, Grid, List, Typography,ListItem,ListItemIcon,ListItemText, CardContent, IconButton } from '@mui/material'
-import { MenuBook,School,Email, Favorite, ArrowBack } from '@mui/icons-material'
+import { MenuBook,School,Email, Favorite, ArrowBack, ManageAccounts } from '@mui/icons-material'
 import cover from '../Admin/images/cover.jpg'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import User from '../../store/atom/userProfile'
@@ -82,6 +82,9 @@ const UserDetails = () => {
         <Card  variant="outlined" sx={{maxWidth:"80%",width:"100%"}}>
             <IconButton onClick={()=>navigate('/user/home')} sx={{padding:2,margin:2,backgroundColor:"#f6cd61"}}>
             <ArrowBack/>
+          </IconButton>
+          <IconButton sx={{float:"right",padding:2,margin:2,backgroundColor:"#f6cd61"}} onClick={()=>navigate('/user/editUserDetails')} size='large'>
+            <ManageAccounts/>
           </IconButton>
             <CardMedia component={"img"} height={"304"} image={cover}/>
             <CardHeader  avatar={

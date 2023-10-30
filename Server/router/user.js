@@ -249,4 +249,16 @@ router.put('/editSecurity',authenticate,async(req,res)=>{
 
 })
 
+//to send user details
+router.get('/getUser',authenticate,async(req,res)=>{
+    const user=await User.findOne({"username":req.user.username});
+
+    if(user)
+    {
+        res.status(200).json({msg:"user details",user});
+    }
+    else
+    res.status(404).send("user not found");
+})
+
 export default router;
