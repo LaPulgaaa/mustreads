@@ -1,0 +1,26 @@
+name: ubuntu(frontend+backend)
+on:
+  pull_request:
+    branches:
+      - "**"
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run actions/checkout@v3
+        uses: actions/checkout@v3
+      - name: Install nodejs
+        uses: actions/set-up@v3
+        with:
+         node-version: "20"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run build
+        run: npm run build
+
+      - name: Run lint 
+        run: npm run lint
